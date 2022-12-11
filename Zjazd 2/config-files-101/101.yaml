@@ -1,0 +1,19 @@
+Fruits:
+  - Apple
+  - Banana
+  - Cherry
+Shop: Fruit Shop
+Employee:
+  Name: John
+  Age: 30
+  Salary:
+    - 25000
+    - 25000
+    - 25000
+  Monthly salary:
+    - March: 25000
+    - April: 25000
+    - May: 25000
+  Commands: |
+    ls -la
+    pwd
