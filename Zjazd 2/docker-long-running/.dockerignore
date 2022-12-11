@@ -1,0 +1,8 @@
+# Dockerfile
+Dockerfile
+
+# venv
+.venv
+
+# Pliki z kluczami
+*.txt
