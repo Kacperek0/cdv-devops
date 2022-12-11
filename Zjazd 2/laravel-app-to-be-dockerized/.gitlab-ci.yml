@@ -1,0 +1,67 @@
+# This is a GitLab CI configuration to build the project as a docker image
+# The file is generic enough to be dropped in a project containing a working Dockerfile
+# Author: Florent CHAUVEAU <florent.chauveau@gmail.com>
+# Mentioned here: https://blog.callr.tech/building-docker-images-with-gitlab-ci-best-practices/
+
+# do not use "latest" here, if you want this to work in the future
+#image: docker:dind
+
+stages:
+  - test
+
+variables:
+  # fill those if you have a proxy in your environment
+  http_proxy: ""
+  https_proxy: ""
+  no_proxy: ""
+  FF_NETWORK_PER_BUILD: 1
+  DEPLOY_ECR_ID: $DEV_ECR_ID
+  DEPLOY_TYPE: "dev"
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      variables:
+        DEPLOY_ECR_ID: $PROD_ECR_ID
+        DEPLOY_TYPE: "prod"
+    - when: always
+
+.testsTemplate:
+  stage: test
+  image: repo.dev2.commhaven.pl:19940/dop/web/translations:php-base
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /skip\-tests/
+  variables:
+    POSTGRES_DB: testing
+    POSTGRES_USER: testing
+    POSTGRES_PASSWORD: testing
+    POSTGRES_HOST_AUTH_METHOD: trust
+    FF_NETWORK_PER_BUILD: 1
+  services:
+    - name: postgres:14
+      alias: bankcat_db
+  before_script:
+    - cp .env.gitlab .env
+    - cp .env.gitlab .env.testing
+    - composer install --no-interaction
+  script:
+    - ./vendor/bin/phpunit --log-junit phpunit-report.xml
+  artifacts:
+    reports:
+      junit: phpunit-report.xml
+
+tests_prod:
+  extends: .testsTemplate
+  tags:
+    - prod-runner-docker
+  only:
+    - main
+    - master
+
+tests_dev:
+  extends: .testsTemplate
+  tags:
+    - dev-runner-docker
+  only:
+    - development
