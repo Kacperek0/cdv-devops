@@ -1,0 +1,44 @@
+version: '3.9'
+# Services description
+services:
+  # Wordpress container
+  wordpress:
+    image: wordpress:latest
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: mysql-db
+      WORDPRESS_DB_USER: cdv-user
+      WORDPRESS_DB_PASSWORD: cdv-user-password
+      WORDPRESS_DB_NAME: db
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - cdv-wordpress
+  # Database container
+  mysql-db:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: db
+      MYSQL_USER: cdv-user
+      MYSQL_ROOT_PASSWORD: cdv-user-password
+      MYSQL_PASSWORD: cdv-user-password
+    expose:
+      - 3306
+      - 33060
+    volumes:
+      - db:/var/lib/mysql
+    command: '--default-authentication-plugin=mysql_native_password'
+    networks:
+      - cdv-wordpress
+
+volumes:
+  db:
+    driver: local
+  wordpress:
+    driver: local
+
+networks:
+  cdv-wordpress:
