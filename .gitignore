@@ -3,3 +3,8 @@
 
 # Env files
 .env
+
+# Txt files but requirements
+*.txt
+!requirements.txt
+
