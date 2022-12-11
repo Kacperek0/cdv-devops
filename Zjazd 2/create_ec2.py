@@ -23,7 +23,7 @@ client = boto3.resource(
     'ec2',
     aws_access_key_id=os.getenv('AWS_KEY'),
     aws_secret_access_key=os.getenv('AWS_SECRET'),
-    regoin_name='eu-west-1'
+    region_name='eu-west-1'
     )
 
 def tag_resource(resource_type: str, name: str) -> list[dict]:
