@@ -1,0 +1,12 @@
+- name: Create users
+  hosts: localhost
+  become: yes
+  tasks:
+    - user: name={{ item.name }} state=present password={{ item.password }}
+      with_items:
+        - name: user1
+          password: $6$A3WKelhfRapD17.$F46C8xOhhVGRFLVcgExCcPsmCkjFHyGPAdW6Bd7qF3f2tePaX1VBBV8EZZtArz/xwTi/Ve2IlNlPAESAZ.R.P/
+        - name: user2
+          password: $6$A3WKelhfRapD17.$F46C8xOhhVGRFLVcgExCcPsmCkjFHyGPAdW6Bd7qF3f2tePaX1VBBV8EZZtArz/xwTi/Ve2IlNlPAESAZ.R.P/
+        - name: user3
+          password: $6$A3WKelhfRapD17.$F46C8xOhhVGRFLVcgExCcPsmCkjFHyGPAdW6Bd7qF3f2tePaX1VBBV8EZZtArz/xwTi/Ve2IlNlPAESAZ.R.P/

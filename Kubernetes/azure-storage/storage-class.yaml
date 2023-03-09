@@ -1,0 +1,67 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: azure-disk
+provisioner: kubernetes.io/azure-disk
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+parameters:
+  storageaccounttype: Standard_LRS
+  kind: Managed
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azure-pvc
+spec:
+  resources:
+    requests:
+      storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: azure-disk
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azure-postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+      env: dev
+  template:
+    metadata:
+      labels:
+        app: postgres
+        env: dev
+    spec:
+      containers:
+      - name: postgres
+        image: postgres
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 5432
+        env:
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-password
+                key: postgres
+                optional: false
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata
+        volumeMounts:
+          - name: data-volume
+            mountPath: /var/lib/postgresql/data
+            subPath: pgdata
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: azure-pvc
+
+

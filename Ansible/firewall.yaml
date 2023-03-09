@@ -1,0 +1,27 @@
+- name: Set Firewall config
+  hosts: cdv
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Firewalld
+      apt:
+        name: firewalld
+        state: present
+    - firewalld:
+        service: http
+        permanent: true
+        state: enabled
+    - firewalld:
+        port: "{{ http_port }}/tcp"
+        permanent: true
+        state: enabled
+    - firewalld:
+        port: "{{ snmp_port }}/udp"
+        permanent: true
+        state: disabled
+    - firewalld:
+        source: "{{ internal_ip_range }}/16"
+        zone: internal
+        state: enabled
+        permanent: true

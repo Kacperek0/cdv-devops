@@ -1,0 +1,12 @@
+- name: Parameters test
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Create directory
+      command: mkdir /params-test creates=/params-test
+
+    - name: Hello world to file
+      shell: echo "Hello World!" > hello.txt
+      argv:
+        chdir: /params-test/

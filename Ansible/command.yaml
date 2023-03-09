@@ -1,0 +1,8 @@
+- name: CDV command
+  hosts: localhost
+  tasks:
+    - name: Execute date command
+      command: date
+
+    - name: Display resolv.conf
+      command: cat /etc/resolv.conf

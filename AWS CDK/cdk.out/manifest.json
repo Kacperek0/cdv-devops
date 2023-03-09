@@ -1,0 +1,112 @@
+{
+  "version": "30.0.0",
+  "artifacts": {
+    "CdvStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CdvStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "CdvStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "CdvStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c2338523b872fffad42ad9d812377178d7cd8a39957c1d176a137e0bf5af0c4d.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "CdvStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "CdvStack.assets"
+      ],
+      "metadata": {
+        "/CdvStack/PullRequests/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PullRequestsEC85C223"
+          }
+        ],
+        "/CdvStack/CdvLambda-dependencies/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdvLambdadependencies99E3A2F8"
+          }
+        ],
+        "/CdvStack/CdvLambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdvLambdaServiceRoleFADEDCB2"
+          }
+        ],
+        "/CdvStack/CdvLambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdvLambdaServiceRoleDefaultPolicyBF1283D2"
+          }
+        ],
+        "/CdvStack/CdvLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdvLambda7AB51028"
+          }
+        ],
+        "/CdvStack/CdvEventRule/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdvEventRule65B8C0D4"
+          }
+        ],
+        "/CdvStack/CdvEventRule/AllowEventRuleCdvStackCdvLambdaF53474F8": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdvEventRuleAllowEventRuleCdvStackCdvLambdaF53474F892C36E4A"
+          }
+        ],
+        "/CdvStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CdvStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/CdvStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/CdvStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "CdvStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

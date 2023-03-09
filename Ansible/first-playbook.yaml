@@ -1,0 +1,5 @@
+- name: Check python version
+  hosts: all
+  tasks:
+    - name: Check python version
+      command: python --version

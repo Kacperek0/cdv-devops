@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cdv-mailhog
+  labels:
+    app: mailhog
+    env: dev
+spec:
+  containers:
+  - name: mailhog
+    image: mailhog/mailhog
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 8025

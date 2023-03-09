@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cdv-postgres
+  labels:
+    app: postgres
+    env: dev
+spec:
+  containers:
+  - name: postgres
+    image: postgres
+    resources:
+      limits:
+        memory: "256Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 5432
+    env:
+      - name: POSTGRES_PASSWORD
+        value: "password"
+

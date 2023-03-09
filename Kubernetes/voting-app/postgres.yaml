@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres-pod
+  labels:
+    name: postgres-pod
+    app: voting-app
+spec:
+  containers:
+  - name: postgres
+    image: postgres
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "250m"
+    ports:
+      - containerPort: 5432
+    env:
+      - name: POSTGRES_PASSWORD
+        value: postgres
+      - name: POSTGRES_USER
+        value: postgres
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db # Takiej nazwy oczekuje aplikacja!!!111oneone
+  labels:
+    name: postgres-service
+    app: voting-app
+spec:
+  selector:
+    name: postgres-pod
+    app: voting-app
+  ports:
+    - port: 5432
+      targetPort: 5432
+
+

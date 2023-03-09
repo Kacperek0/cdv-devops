@@ -1,0 +1,8 @@
+- name: Add Google DNS
+  hosts: localhost
+
+  tasks:
+    - name: Add Google DNS to resolv.conf
+      lineinfile:
+        path: /etc/resolv.conf
+        line: 'nameserver 8.8.8.8'
