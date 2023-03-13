@@ -148,9 +148,9 @@ def create_virtual_machine(credentials, subscription_id, resource_group_name, vm
             "location": location,
             "storage_profile": {
                 "image_reference": {
-                    "publisher": "Canonical",
-                    "offer": "UbuntuServer",
-                    "sku": "18.04-LTS",
+                    "publisher": "canonical",
+                    "offer": "0001-com-ubuntu-server-jammy",
+                    "sku": "22_04-lts",
                     "version": "latest",
                 }
             },

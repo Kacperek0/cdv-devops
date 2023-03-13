@@ -8,6 +8,7 @@ import services as _services, schemas as _schemas
 
 app = _fastapi.FastAPI()
 
+_services.create_database()
 
 @app.post("/api/users")
 async def create_user(
