@@ -37,21 +37,19 @@ sudo apt-get install nodejs -y
 sudo npm install -g create-react-app
 
 
-# Clone repository
-git clone https://github.com/Kacperek0/cdv-devops.git
 # Go to repository
-cd ../Zaliczenie/Backend
-# Create virtual environment
-python3 -m venv .venv
-# Activate virtual environment
-source .venv/bin/activate
+cd ../Backend
 # Install requirements
 pip3 install -r requirements.txt
+# Resolve JWT error
+pip uninstall JWT -y
+pip uninstall PyJWT -y
+pip install PyJWT
 # Start python3 backend server
 nohup python3 main.py &
 
 # Go to repository
-cd ../Zaliczenie/Frontend
+cd ../Frontend
 # Install requirements
 npm install
 # Build react

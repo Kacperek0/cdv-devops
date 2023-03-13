@@ -2,7 +2,7 @@ import sqlalchemy as _sql
 import sqlalchemy.ext.declarative as _declarative
 import sqlalchemy.orm as _orm
 
-DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/postgres"
+DATABASE_URL = "postgresql://azureuser:postgres@localhost:5432/azureuser"
 
 engine = _sql.create_engine(DATABASE_URL)
 
