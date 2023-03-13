@@ -25,12 +25,6 @@ sudo -u postgres createuser --superuser $USER
 sudo -u postgres createdb $USER
 # Set postgresql password
 echo "ALTER USER azureuser PASSWORD 'postgres';" | sudo -u postgres psql
-# Install Python3.10
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt update
-sudo sudo apt install python3.10 -y
-sudo apt install python3.10-distutils
-sudo apt install python3.10-venv
 # Install pip3
 sudo apt-get install python3-pip -y
 # Set python3.10 as default
