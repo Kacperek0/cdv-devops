@@ -57,7 +57,7 @@ npm run build
 # Copy build to nginx
 sudo cp -r build/* /var/www/html/
 
-# Configure nginx
+# Copy nginx config
 sudo cp ../Infra/nginx.conf /etc/nginx/sites-available/default
 # Restart nginx
 sudo systemctl restart nginx
