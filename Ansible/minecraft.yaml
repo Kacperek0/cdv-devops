@@ -1,0 +1,68 @@
+- name: Setup Minecraft server
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Install Java
+      apt:
+        name: openjdk-17-jre-headless
+        state: present
+    - name: Create Minecraft user
+      user:
+        name: minecraft
+        state: present
+    - name: Crete Minecraft directory
+      file:
+        path: /home/minecraft
+        state: directory
+        owner: minecraft
+        group: minecraft
+    - name: Download Minecraft
+      get_url:
+        url: https://piston-data.mojang.com/v1/objects/8f3112a1049751cc472ec13e397eade5336ca7ae/server.jar
+        dest: /home/minecraft/server.jar
+        mode: 0755
+        owner: minecraft
+        group: minecraft
+    - name: Create Minecraft user
+      user:
+        name: minecraft
+        state: present
+    - name: Open Minecraft port
+      ufw:
+        rule: allow
+        port: 25565
+        proto: tcp
+    - name: Accept EULA
+      become: yes
+      become_user: minecraft
+      lineinfile:
+        path: /home/minecraft/eula.txt
+        regexp: '^eula='
+        line: 'eula=true'
+    - name: Create systemd service
+      become: yes
+      copy:
+        content: |
+          [Unit]
+          Description=Minecraft Server
+          After=network.target
+          [Service]
+          Type=simple
+          User=minecraft
+          WorkingDirectory=/home/minecraft
+          ExecStart=/usr/bin/java -Xmx512M -Xms512M -jar /home/minecraft/server.jar nogui -port 25565
+          Restart=on-failure
+          [Install]
+          WantedBy=multi-user.target
+        dest: /etc/systemd/system/minecraft.service
+    - name: Enable Minecraft service
+      become: yes
+      systemd:
+        name: minecraft
+        enabled: yes
+    - name: Start Minecraft service
+      become: yes
+      systemd:
+        name: minecraft
+        state: started
+
