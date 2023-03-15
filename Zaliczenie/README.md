@@ -10,6 +10,8 @@ Firma zewnętrzna zbudowała wszystkie komponenty na jednej wirtualnej maszynie.
 Klient obecnie nie posiada zadnego monitoringu. Chce, abyś zaproponował rozwiązanie, które pozwoli mu na monitorowanie swojej aplikacji.
 
 ### Deployment aplikacji
+*Jedna z bibliotek do obsługi Azure SDK wymaga Pythona przynajmniej w wersji 3.10*
+
 1. Sklonuj repozytorium z kodem aplikacji
 ```bash
 git clone https://github.com/Kacperek0/cdv-devops.git
