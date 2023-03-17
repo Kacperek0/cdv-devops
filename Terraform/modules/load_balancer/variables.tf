@@ -24,33 +24,18 @@ variable "prefix" {
   description = "Team prefix"
 }
 
-variable "instances" {
-  type        = number
-  description = "VM count"
-}
-
-variable "admin_password" {
-  type        = string
-  description = "Admin passowrd"
-}
 
 variable "resource_group_name" {
   type        = string
   description = "Resource group name"
 }
 
-variable "subnet_id" {
-  type        = string
-  description = "Subnet Id"
+variable "vm_names" {
+    type        = list(string)
+    description = "VM names"
 }
 
-variable "sg_id" {
-  type        = string
-  description = "NSG Id"
-}
-
-variable "create_public_ip" {
-  type        = bool
-  description = "Create public IP"
-  default     = false
+variable "vm_nic" {
+    type        = list(string)
+    description = "VM NICs"
 }
