@@ -16,5 +16,5 @@
 Terraform/plan
 *.tfstate
 *.tfstate.backup
-
+.terraform.*
 
