@@ -33,13 +33,3 @@ variable "environment" {
   type        = string
   description = "Environment type"
 }
-
-variable "backend_rg_name" {
-  type        = string
-  description = "Remote backend RG name"
-}
-
-variable "backend_sa_name" {
-  type        = string
-  description = "Remote backend Storage Account name"
-}
