@@ -1,0 +1,13 @@
+[Unit]
+Description=FastAPI Servcie
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/home/azureuser/cdv-devops/HA/fastapi-101/src
+ExecStart=/usr/bin/python3 main.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
