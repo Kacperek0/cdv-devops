@@ -47,3 +47,14 @@ variable "owner" {
   type        = string
   description = "Resource owner"
 }
+
+variable "is_from_golden_image" {
+  type        = bool
+  description = "Is VMSS created from custom image"
+}
+
+variable "golden_image_id" {
+  type        = string
+  description = "Golden image ID"
+  default     = null
+}

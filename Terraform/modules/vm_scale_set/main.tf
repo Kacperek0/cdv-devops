@@ -6,19 +6,20 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   instances           = var.instances
 
   admin_username                  = "azureuser"
-  admin_password                  = var.admin_password
+  admin_password                  = "Q1w2e3r4t5y6."
   disable_password_authentication = false
 
-  custom_data = filebase64("${path.module}/setup.sh")
+  custom_data     = var.is_from_golden_image ? null : filebase64("${path.module}/setup.sh")
+  source_image_id = var.is_from_golden_image ? var.golden_image_id : null
 
   health_probe_id = azurerm_lb_probe.lb_probe.id
 
-  source_image_reference {
-    publisher = "canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts"
-    version   = "latest"
-  }
+  # source_image_reference {
+  #   publisher = "canonical"
+  #   offer     = "0001-com-ubuntu-server-jammy"
+  #   sku       = "22_04-lts"
+  #   version   = "latest"
+  # }
 
   os_disk {
     caching              = "ReadWrite"
