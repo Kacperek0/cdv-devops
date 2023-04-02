@@ -31,8 +31,8 @@ module "postgres_server" {
   prefix      = var.prefix
 }
 
-module "golden_image_vmss" {
-  source = "./modules/vm_scale_set"
+module "web_app" {
+  source = "./modules/web_app"
 
   prefix      = var.prefix
   application = var.application
@@ -42,13 +42,7 @@ module "golden_image_vmss" {
   resource_group_name = module.resource_group.resource_group_name
   location            = var.location
 
-  instances = 2
-
-  admin_password = var.admin_password
-
-  sg_id     = module.networking.sg_id
-  subnet_id = module.networking.subnet_id
-
-  is_from_golden_image = true
-  golden_image_id      = "/subscriptions/725fa6c3-bb84-4bc9-a873-2d1d65c02bbf/resourceGroups/cdv-golden-image-rg/providers/Microsoft.Compute/galleries/cdv_fastapi_gallery/images/fastapi-backend-generalized/versions/0.0.1"
+  postgres_user     = module.postgres_server.postgres_user
+  postgres_password = module.postgres_server.postgres_password
+  postgres_host     = module.postgres_server.postgres_host
 }
