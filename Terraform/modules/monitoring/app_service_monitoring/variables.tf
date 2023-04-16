@@ -9,8 +9,8 @@ variable "application" {
 }
 
 variable "environment" {
-  type        = string
-  description = "Environment name"
+    type = string
+    description = "Environment name"
 }
 
 variable "owner" {
@@ -20,32 +20,32 @@ variable "owner" {
 
 variable "resource_group_name" {
   type        = string
-  description = "RG Name"
+  description = "RG name"
 }
 
-variable "location" {
+variable "app_service_id" {
   type        = string
-  description = "Azure region"
-}
-
-variable "postgres_user" {
-  type        = string
-  description = "Postgres DB username"
-}
-
-variable "postgres_host" {
-  type        = string
-  description = "Postgres hostname"
-}
-
-variable "postgres_password" {
-  type        = string
-  description = "Postgres DB password"
+  description = "App Service ID"
 }
 
 variable "log_analytics_workspace_id" {
   type        = string
   description = "LA Workspace ID"
+}
+
+variable "severity" {
+  type        = string
+  description = "Alert severity"
+}
+
+variable "threshold" {
+  type        = number
+  description = "Threshold value"
+}
+
+variable "app_service_name" {
+  type        = string
+  description = "App Service Name"
 }
 
 variable "critical_ag" {

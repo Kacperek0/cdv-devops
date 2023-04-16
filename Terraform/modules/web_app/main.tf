@@ -42,3 +42,38 @@ resource "azurerm_linux_web_app" "webapp" {
   }
 }
 
+module "web_app_monitoring_critical" {
+  source = "../monitoring/app_service_monitoring"
+
+  prefix      = var.prefix
+  application = var.application
+  environment = var.environment
+  owner       = var.owner
+
+  resource_group_name        = var.resource_group_name
+  app_service_id             = azurerm_linux_web_app.webapp.id
+  log_analytics_workspace_id = var.log_analytics_workspace_id
+  severity                   = "critical"
+  threshold                  = 10
+
+  app_service_name = azurerm_linux_web_app.webapp.name
+  critical_ag      = var.critical_ag
+}
+
+module "web_app_monitoring_warning" {
+  source = "../monitoring/app_service_monitoring"
+
+  prefix      = var.prefix
+  application = var.application
+  environment = var.environment
+  owner       = var.owner
+
+  resource_group_name        = var.resource_group_name
+  app_service_id             = azurerm_linux_web_app.webapp.id
+  log_analytics_workspace_id = var.log_analytics_workspace_id
+  severity                   = "warning"
+  threshold                  = 5
+
+  app_service_name = azurerm_linux_web_app.webapp.name
+  warning_ag = var.warning_ag
+}
