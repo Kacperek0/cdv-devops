@@ -3,9 +3,22 @@
   tasks:
     - name: Disable cramfs
       mount:
-        path: /tmp
+        path: {{ mount_path }}
         fstype: cramfs
         state: absent
+      with_items:
+        - /tmp
+        - /var/tmp
+        - /var/log
+        - /var/log/audit
+        - /home
+        - /srv
+        - /opt
+        - /usr/local
+        - /media
+        - /mnt
+        - /root
+        - /boot
       register: cramfs_hardening
 
     - name: Disable freevxfs
