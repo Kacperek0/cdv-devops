@@ -1,0 +1,10 @@
+- name: Unused FS hardening check
+  hosts: localhost
+  tasks:
+    - name: Check cramfs
+      script: /checks/unused_fs/cramfs_chk.sh
+      register: cramfs_chk
+
+    - name: Display cramfs status
+      debug:
+        msg: "cramfs is {{ cramfs_chk.stdout }}"
