@@ -29,37 +29,37 @@ module "networking" {
   resource_group_name = module.resource_group.resource_group_name
 }
 
-module "postgres_server" {
-  source = "./modules/postgres_db"
+# module "postgres_server" {
+#   source = "./modules/postgres_db"
 
-  resource_group_name = module.resource_group.resource_group_name
-  location            = var.location
+#   resource_group_name = module.resource_group.resource_group_name
+#   location            = var.location
 
-  environment = var.environment
-  application = var.application
-  owner       = var.owner
-  prefix      = var.prefix
-}
+#   environment = var.environment
+#   application = var.application
+#   owner       = var.owner
+#   prefix      = var.prefix
+# }
 
-module "web_app" {
-  source = "./modules/web_app"
+# module "web_app" {
+#   source = "./modules/web_app"
 
-  prefix      = var.prefix
-  application = var.application
-  environment = var.environment
-  owner       = var.owner
+#   prefix      = var.prefix
+#   application = var.application
+#   environment = var.environment
+#   owner       = var.owner
 
-  resource_group_name = module.resource_group.resource_group_name
-  location            = var.location
+#   resource_group_name = module.resource_group.resource_group_name
+#   location            = var.location
 
-  postgres_user     = module.postgres_server.postgres_user
-  postgres_password = module.postgres_server.postgres_password
-  postgres_host     = module.postgres_server.postgres_host
+#   postgres_user     = module.postgres_server.postgres_user
+#   postgres_password = module.postgres_server.postgres_password
+#   postgres_host     = module.postgres_server.postgres_host
 
-  log_analytics_workspace_id = module.log_analytics.la_id
-  critical_ag                = module.log_analytics.critical_ag
-  warning_ag                 = module.log_analytics.warning_ag
-}
+#   log_analytics_workspace_id = module.log_analytics.la_id
+#   critical_ag                = module.log_analytics.critical_ag
+#   warning_ag                 = module.log_analytics.warning_ag
+# }
 
 module "bastion" {
   source = "./modules/virtual_machine"
@@ -124,13 +124,13 @@ module "webserver_load_balancer" {
   ]
 }
 
-module "log_analytics" {
-  source = "./modules/monitoring/log_analytics"
+# module "log_analytics" {
+#   source = "./modules/monitoring/log_analytics"
 
-  prefix      = var.prefix
-  application = var.application
-  owner       = var.owner
+#   prefix      = var.prefix
+#   application = var.application
+#   owner       = var.owner
 
-  resource_group_name = module.la_resource_group.resource_group_name
-  location            = var.location
-}
+#   resource_group_name = module.la_resource_group.resource_group_name
+#   location            = var.location
+# }
