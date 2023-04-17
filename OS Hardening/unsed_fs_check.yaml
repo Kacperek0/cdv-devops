@@ -2,9 +2,41 @@
   hosts: localhost
   tasks:
     - name: Check cramfs
-      script: /checks/unused_fs/cramfs_chk.sh
+      script: ./checks/unused_fs/cramfs_chk.sh
       register: cramfs_chk
 
     - name: Display cramfs status
       debug:
         msg: "cramfs is {{ cramfs_chk.stdout }}"
+
+    - name: Check freevxfs
+      script: ./checks/unused_fs/freevxfs_chk.sh
+      register: freevxfs_chk
+
+    - name: Display freevxfs status
+      debug:
+        msg: "freevxfs is {{ freevxfs_chk.stdout }}"
+
+    - name: Check jffs2
+      script: ./checks/unused_fs/jffs2_chk.sh
+      register: jffs2_chk
+
+    - name: Display jffs2 status
+      debug:
+        msg: "jffs2 is {{ jffs2_chk.stdout }}"
+
+    - name: Check hfs
+      script: ./checks/unused_fs/hfs_chk.sh
+      register: hfs_chk
+
+    - name: Display hfs status
+      debug:
+        msg: "hfs is {{ hfs_chk.stdout }}"
+
+    - name: Check hfsplus
+      script: ./checks/unused_fs/hfsplus_chk.sh
+      register: hfsplus_chk
+
+    - name: Display hfsplus status
+      debug:
+        msg: "hfsplus is {{ hfsplus_chk.stdout }}"
