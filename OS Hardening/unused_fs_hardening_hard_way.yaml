@@ -1,24 +1,26 @@
 - name: Harden unused FS without using scripts
   hosts: localhost
+  vars:
+    paths:
+      - /tmp
+      - /var/tmp
+      - /var/log
+      - /var/log/audit
+      - /home
+      - /srv
+      - /opt
+      - /usr/local
+      - /media
+      - /mnt
+      - /root
+      - /boot
   tasks:
     - name: Disable cramfs
       mount:
         path: "{{ item }}"
         fstype: cramfs
         state: absent
-      with_items:
-        - /tmp
-        - /var/tmp
-        - /var/log
-        - /var/log/audit
-        - /home
-        - /srv
-        - /opt
-        - /usr/local
-        - /media
-        - /mnt
-        - /root
-        - /boot
+      with_items: "{{ paths }}"
       register: cramfs_hardening
 
     - name: Disable freevxfs
@@ -26,38 +28,29 @@
         path: "{{ item }}"
         fstype: freevxfs
         state: absent
-      with_items:
-        - /tmp
-        - /var/tmp
-        - /var/log
-        - /var/log/audit
-        - /home
-        - /srv
-        - /opt
-        - /usr/local
-        - /media
-        - /mnt
-        - /root
-        - /boot
+      with_items: "{{ paths }}"
       register: freevxfs_hardening
 
     - name: Disable jffs2
       mount:
-        path: /tmp
+        path: "{{ item }}"
         fstype: jffs2
         state: absent
+      with_items: "{{ paths }}"
       register: jffs2_hardening
 
     - name: Disable hfs
       mount:
-        path: /tmp
+        path: "{{ item }}"
         fstype: hfs
         state: absent
+      with_items: "{{ paths }}"
       register: hfs_hardening
 
     - name: Disable hfsplus
       mount:
-        path: /tmp
+        path: "{{ item }}"
         fstype: hfsplus
         state: absent
+      with_items: "{{ paths }}"
       register: hfsplus_hardening
