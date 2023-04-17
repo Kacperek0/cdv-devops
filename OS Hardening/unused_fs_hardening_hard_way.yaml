@@ -3,6 +3,7 @@
   tasks:
     - name: Disable cramfs
       mount:
+        path: /tmp
         fstype: cramfs
         state: absent
       register: cramfs_hardening
