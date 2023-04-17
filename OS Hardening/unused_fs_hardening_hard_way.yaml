@@ -3,7 +3,7 @@
   tasks:
     - name: Disable cramfs
       mount:
-        path: "{{ path }}"
+        path: "{{ item }}"
         fstype: cramfs
         state: absent
       with_items:
@@ -23,7 +23,7 @@
 
     - name: Disable freevxfs
       mount:
-        path: "{{ path }}"
+        path: "{{ item }}"
         fstype: freevxfs
         state: absent
       with_items:
