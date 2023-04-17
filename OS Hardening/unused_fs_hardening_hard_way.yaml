@@ -3,7 +3,7 @@
   tasks:
     - name: Disable cramfs
       mount:
-        path: {{ item }}
+        path: "{{ item }}"
         fstype: cramfs
         state: absent
       with_items:
