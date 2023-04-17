@@ -3,7 +3,7 @@
   tasks:
     - name: Disable cramfs
       mount:
-        path: "{{ item }}"
+        path: "{{ path }}"
         fstype: cramfs
         state: absent
       with_items:
@@ -23,9 +23,22 @@
 
     - name: Disable freevxfs
       mount:
-        path: /tmp
+        path: "{{ path }}"
         fstype: freevxfs
         state: absent
+      with_items:
+        - /tmp
+        - /var/tmp
+        - /var/log
+        - /var/log/audit
+        - /home
+        - /srv
+        - /opt
+        - /usr/local
+        - /media
+        - /mnt
+        - /root
+        - /boot
       register: freevxfs_hardening
 
     - name: Disable jffs2
