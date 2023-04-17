@@ -1,5 +1,5 @@
 - name: Harden unused FS
-  host: localhost
+  hosts: localhost
   tasks:
     - name: Disable cramfs
       script: ./checks/unused_fs/cramfs_hardening.sh
