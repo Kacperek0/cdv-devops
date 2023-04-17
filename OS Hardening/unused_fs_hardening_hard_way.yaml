@@ -8,42 +8,30 @@
         state: absent
       register: cramfs_hardening
 
-    - name: Display cramfs status
-      debug:
-        msg: "cramfs is {{ cramfs_hardening.stdout }}"
-
     - name: Disable freevxfs
       mount:
+        path: /tmp
         fstype: freevxfs
         state: absent
       register: freevxfs_hardening
 
-    - name: Display freevxfs status
-      debug:
-        msg: "freevxfs is {{ freevxfs_hardening.stdout }}"
-
     - name: Disable jffs2
       mount:
+        path: /tmp
         fstype: jffs2
         state: absent
       register: jffs2_hardening
 
-    - name: Display jffs2 status
-      debug:
-        msg: "jffs2 is {{ jffs2_hardening.stdout }}"
-
     - name: Disable hfs
       mount:
+        path: /tmp
         fstype: hfs
         state: absent
       register: hfs_hardening
 
-    - name: Display hfs status
-      debug:
-        msg: "hfs is {{ hfs_hardening.stdout }}"
-
     - name: Disable hfsplus
       mount:
+        path: /tmp
         fstype: hfsplus
         state: absent
       register: hfsplus_hardening
