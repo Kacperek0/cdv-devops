@@ -2,7 +2,7 @@
   hosts: localhost
   tasks:
     - name: Disable cramfs
-      script: ./checks/unused_fs/cramfs_hardening.sh
+      script: ./hardening/unused_fs/cramfs_hardening.sh
       register: cramfs_hardening
 
     - name: Display cramfs status
@@ -10,7 +10,7 @@
         msg: "cramfs is {{ cramfs_hardening.stdout }}"
 
     - name: Disable freevxfs
-      script: ./checks/unused_fs/freevxfs_hardening.sh
+      script: ./hardening/unused_fs/freevxfs_hardening.sh
       register: freevxfs_hardening
 
     - name: Display freevxfs status
@@ -18,7 +18,7 @@
         msg: "freevxfs is {{ freevxfs_hardening.stdout }}"
 
     - name: Disable jffs2
-      script: ./checks/unused_fs/jffs2_hardening.sh
+      script: ./hardening/unused_fs/jffs2_hardening.sh
       register: jffs2_hardening
 
     - name: Display jffs2 status
@@ -26,7 +26,7 @@
         msg: "jffs2 is {{ jffs2_hardening.stdout }}"
 
     - name: Disable hfs
-      script: ./checks/unused_fs/hfs_hardening.sh
+      script: ./hardening/unused_fs/hfs_hardening.sh
       register: hfs_hardening
 
     - name: Display hfs status
@@ -34,7 +34,7 @@
         msg: "hfs is {{ hfs_hardening.stdout }}"
 
     - name: Disable hfsplus
-      script: ./checks/unused_fs/hfsplus_hardening.sh
+      script: ./hardening/unused_fs/hfsplus_hardening.sh
       register: hfsplus_hardening
 
     - name: Display hfsplus status
