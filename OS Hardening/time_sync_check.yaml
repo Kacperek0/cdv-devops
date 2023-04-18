@@ -1,0 +1,42 @@
+- name: Check time sync
+  hosts: localhost
+  tasks:
+    - name: Check time sync
+      script: ./checks/time_sync/time_sync_chk.sh
+      register: time_sync_chk
+
+    - name: Display time sync status
+      debug:
+        msg: "Time sync is {{ time_sync_chk.stdout }}"
+
+    - name: Check chrony configuration
+      command: grep -Pr --include=*.{sources,conf} '^\h*(server|pool)\h+\H+' /etc/chrony/
+      register: chrony_config_chk
+
+    - name: Display chrony configuration status
+      debug:
+        msg: "Chrony configuration is {{ chrony_config_chk.stdout }}"
+
+    - name: Check chrony user
+      command: ps -ef | awk '(/[c]hronyd/ && $1!="_chrony") { print $1 }'
+      register: chrony_user_chk
+
+    - name: Display chrony user status
+      debug:
+        msg: "Chrony user is {{ chrony_user_chk.stdout }}"
+
+    - name: Check if chrony is running
+      command: systemctl is-enabled chrony.service
+      register: chrony_running_chk
+
+    - name: Display chrony running status
+      debug:
+        msg: "Chrony is {{ chrony_running_chk.stdout }}"
+
+    - name: Check if chrony is active
+      command: systemctl is-active chrony.service
+      register: chrony_active_chk
+
+    - name: Display chrony active status
+      debug:
+        msg: "Chrony is {{ chrony_active_chk.stdout }}"

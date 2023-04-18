@@ -1,0 +1,81 @@
+- name: Time Sync checks
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Check if chrony is installed
+      apt:
+        name: chrony
+        state: present
+      register: chrony_installed
+
+    - name: Display chrony status
+      debug:
+        msg: "chrony is {{ chrony_installed.stdout }}"
+      when: chrony_installed is changed
+
+    - name: Stop systemd-timesyncd
+      systemd:
+        name: systemd-timesyncd
+        state: stopped
+        enabled: no
+
+    - name: Mask systemd-timesyncd
+      systemd:
+        name: systemd-timesyncd
+        state: masked
+
+    - name: Purge ntp
+      apt:
+        name: ntp
+        state: absent
+
+- name: Configure chrony
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Configure chrony
+      lineinfile:
+        path: /etc/chrony/chrony.conf
+        regexp: '^server'
+        line: 'server {{ items }} iburst'
+        state: present
+      with_items:
+        - time-a-g.nist.gov
+        - 132.163.97.3
+        - time-d-b.nist.gov
+
+    - name: Restart chrony
+      systemd:
+        name: chrony
+        state: restarted
+
+- name: Ensure chrony is running as user _chrony
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Ensure chrony is running as user _chrony
+      lineinfile:
+        path: /etc/chrony/chrony.conf
+        regexp: '^user'
+        line: 'user _chrony'
+        state: present
+
+    - name: Restart chrony
+      systemd:
+        name: chrony
+        state: restarted
+
+- name: Ensure chrony is enabled
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Unmask chrony
+      systemd:
+        name: chrony
+        state: unmasked
+
+    - name: Enable chrony
+      systemd:
+        name: chrony
+        state: started
+        enabled: yes
