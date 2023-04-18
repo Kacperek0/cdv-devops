@@ -1,6 +1,8 @@
 - name: Check Special Purpose Services hardening
   hosts: localhost
   become: yes
+  collections:
+    - community.general
   tasks:
     - name: Check xserver-xorg installation status
       dpkg_selection_facts:
