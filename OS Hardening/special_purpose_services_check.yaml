@@ -12,6 +12,5 @@
 
     - name: Display installed xserver-xorg packages
       debug:
-        msg: "{{ item }}"
-      with_items: "{{ dpkg_facts.packages | select('match', '^xserver-xorg.*') | selectattr('status', 'equalto', 'installed') | list }}"
+        msg: "xserver-xorg is {{ dpkg_facts }}"
 
