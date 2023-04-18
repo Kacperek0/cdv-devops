@@ -1,5 +1,6 @@
 - name: Check time sync
   hosts: localhost
+  become: yes
   tasks:
     - name: Check time sync
       script: ./checks/time_sync/time_sync_chk.sh
