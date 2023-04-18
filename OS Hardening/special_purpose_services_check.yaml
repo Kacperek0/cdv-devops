@@ -12,7 +12,7 @@
     - community.general
   tasks:
     - name: Check xserver-xorg installation status
-      dpkg_selection_facts:
+      dpkg_selections:
       register: dpkg_facts
 
     - name: Display installed xserver-xorg packages
