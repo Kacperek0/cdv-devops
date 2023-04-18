@@ -10,9 +10,9 @@
         - xserver-xorg
       ignore_errors: yes
       register: xserver_installed
-      
+
     - name: Display xserver-xorg status
       debug:
-        msg: "xserver-xorg is {{ xserver_installed }}"
+        msg: "xserver-xorg is {{ xserver_installed.stderr }}"
 
 
