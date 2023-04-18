@@ -52,6 +52,4 @@
         rule: allow
         direction: out
         to_ip: any
-        port: any
-        proto: any
 
