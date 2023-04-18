@@ -16,6 +16,7 @@
       systemd:
         name: ufw
         enabled: yes
+        state: started
         masked: no
 
     - name: Enable ufw
