@@ -22,7 +22,7 @@
     - name: Mask systemd-timesyncd
       systemd:
         name: systemd-timesyncd
-        state: disabled
+        masked: yes
 
     - name: Purge ntp
       apt:
@@ -72,10 +72,11 @@
     - name: Unmask chrony
       systemd:
         name: chrony
-        state: unmasked
+        masked: no
 
     - name: Enable chrony
       systemd:
         name: chrony
         state: started
         enabled: yes
+
