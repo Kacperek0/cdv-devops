@@ -1,10 +1,3 @@
-- name: Install required roles
-  hosts: localhost
-  tasks:
-    - name: Install role from Ansible Galaxy
-      command: ansible-galaxy install community.general
-      become: true
-
 - name: Check Special Purpose Services hardening
   hosts: localhost
   become: yes
