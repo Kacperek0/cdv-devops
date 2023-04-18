@@ -22,7 +22,7 @@
     - name: Mask systemd-timesyncd
       systemd:
         name: systemd-timesyncd
-        state: masked
+        state: disabled
 
     - name: Purge ntp
       apt:
