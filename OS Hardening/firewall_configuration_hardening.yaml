@@ -16,5 +16,5 @@
       systemd:
         name: ufw
         enabled: yes
-        active: yes
+        state: started
         masked: no
