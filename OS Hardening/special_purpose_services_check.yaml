@@ -13,6 +13,6 @@
 
     - name: Display xserver-xorg status
       debug:
-        msg: "xserver-xorg is {{ xserver_installed }}"
+        msg: "xserver-xorg is {{ xserver_installed.results[0].stderr }}"
 
 
