@@ -2,11 +2,12 @@
   hosts: localhost
   become: yes
   tasks:
-    - name: Check X Window System
-      command: dpkg-query -W -f='${binary:Package}\t${Status}\t${db:Status-Status}\n' xserver-xorg* | grep -Pi '\h+installed\b'
-      register: x_window_chk
-      ignore_errors: yes
+    - name: Check xserver-xorg installation status
+      dpkg_selection_facts:
+      register: dpkg_facts
 
-    - name: Display X Window System status
+    - name: Display installed xserver-xorg packages
       debug:
-        msg: "X Window System is {{ x_window_chk.stdout }}"
+        msg: "{{ item }}"
+      with_items: "{{ dpkg_facts.packages | select('match', '^xserver-xorg.*') | selectattr('status', 'equalto', 'installed') | list }}"
+
