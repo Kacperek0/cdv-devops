@@ -11,7 +11,7 @@
         msg: "Time sync is {{ time_sync_chk.stdout }}"
 
     - name: Check chrony configuration
-      command: grep -Pr --include=*.{sources,conf} '^\h*(server|pool)\h+\H+' /etc/chrony/
+      command: grep -Prv --include=*.{sources,conf} '^\h*(server|pool)\h+\H+' /etc/chrony/
       register: chrony_config_chk
 
     - name: Display chrony configuration status
