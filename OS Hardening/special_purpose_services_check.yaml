@@ -8,7 +8,9 @@
       command: dpkg-query -l "{{ item }}"
       with_items:
         - xserver-xorg
+      ignore_errors: yes
       register: xserver_installed
+      
     - name: Display xserver-xorg status
       debug:
         msg: "xserver-xorg is {{ xserver_installed }}"
