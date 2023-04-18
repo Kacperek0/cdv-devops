@@ -28,7 +28,7 @@
 
     - name: Display installation status for each service
       debug:
-        msg: "{{ item }}"
+        msg: "{{ item.item }}"
       with_items: "{{ installation_status }}"
 
     # # Display message from previous task
