@@ -10,17 +10,16 @@
       debug:
         msg: "Time sync is {{ time_sync_chk.stdout }}"
 
-    # - name: Check chrony configuration
-    #   command: |
-    #     grep -Pr --include=*.{sources,conf} '^\h*(server|pool)\h+\H+' /etc/chrony/
-    #   register: chrony_config_chk
+    - name: Check chrony configuration
+      script: ./checks/time_sync/chrony_config_chk.sh
+      register: chrony_config_chk
 
-    # - name: Display chrony configuration status
-    #   debug:
-    #     msg: "Chrony configuration is {{ chrony_config_chk.stdout }}"
+    - name: Display chrony configuration status
+      debug:
+        msg: "Chrony configuration is {{ chrony_config_chk.stdout }}"
 
     - name: Check chrony user
-      command: ps -ef | awk '(/[c]hronyd/ && $1!="_chrony") { print $1 }'
+      script: ./checks/time_sync/chrony_user_chk.sh
       register: chrony_user_chk
 
     - name: Display chrony user status
