@@ -5,6 +5,7 @@
     - name: Check X Window System
       command: dpkg-query -W -f='${binary:Package}\t${Status}\t${db:Status-Status}\n' xserver-xorg* | grep -Pi '\h+installed\b'
       register: x_window_chk
+      ignore_errors: yes
 
     - name: Display X Window System status
       debug:
