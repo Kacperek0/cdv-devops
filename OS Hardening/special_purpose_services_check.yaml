@@ -12,6 +12,6 @@
     - name: Display xserver-xorg status
       debug:
         msg: "xserver-xorg is {{ xserver_installed.packages['xserver-xorg'] }}"
-      when: xserver_installed is changed
+      # when: xserver_installed is changed
 
 
