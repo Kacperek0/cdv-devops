@@ -26,10 +26,10 @@
       ignore_errors: yes
       register: installation_status
 
-    - name: Display installation status for each service
-      debug:
-        msg: "{{ item.item }} is {{ 'installed' if item.stderr == '' else 'not installed' }}"
-      with_items: "{{ installation_status.results }}"
+    # - name: Display installation status for each service
+    #   debug:
+    #     msg: "{{ item.item }} is {{ 'installed' if item.stderr == '' else 'not installed' }}"
+    #   with_items: "{{ installation_status.results }}"
 
     # Display message from previous task
     - name: Display message
