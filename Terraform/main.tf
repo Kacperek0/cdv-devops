@@ -99,30 +99,30 @@ module "application_nodes" {
   create_as           = false
 }
 
-module "webserver_load_balancer" {
-  source = "./modules/load_balancer"
+# module "webserver_load_balancer" {
+#   source = "./modules/load_balancer"
 
-  prefix              = var.prefix
-  application         = var.application
-  environment         = var.environment
-  resource_group_name = module.resource_group.resource_group_name
-  owner               = var.owner
-  location            = var.location
+#   prefix              = var.prefix
+#   application         = var.application
+#   environment         = var.environment
+#   resource_group_name = module.resource_group.resource_group_name
+#   owner               = var.owner
+#   location            = var.location
 
-  vm_names = [
-    module.application_nodes[0].vm_name,
-    module.application_nodes[1].vm_name
-  ]
+#   vm_names = [
+#     module.application_nodes[0].vm_name,
+#     module.application_nodes[1].vm_name
+#   ]
 
-  vm_nic = [
-    module.application_nodes[0].vm_nic,
-    module.application_nodes[1].vm_nic
-  ]
+#   vm_nic = [
+#     module.application_nodes[0].vm_nic,
+#     module.application_nodes[1].vm_nic
+#   ]
 
-  depends_on = [
-    module.application_nodes
-  ]
-}
+#   depends_on = [
+#     module.application_nodes
+#   ]
+# }
 
 # module "log_analytics" {
 #   source = "./modules/monitoring/log_analytics"
