@@ -37,7 +37,7 @@
       lineinfile:
         path: /etc/chrony/chrony.conf
         regexp: '^server'
-        line: 'server {{ items }} iburst'
+        line: 'server {{ item }} iburst'
         state: present
       with_items:
         - time-a-g.nist.gov
