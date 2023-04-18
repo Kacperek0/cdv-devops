@@ -28,6 +28,7 @@
 
     - name: Display xserver-xorg status
       debug:
-        msg: "xserver-xorg is {{ installation_status.results[0].stderr }}"
+        msg: "{{ item }} is {{ installation_status.results[0].stderr }}"
+      with_items: "{{ services }}"
 
 
