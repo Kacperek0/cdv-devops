@@ -47,3 +47,11 @@
         direction: in
         from_ip: ::1
 
+    - name: Ensure ufw outbound connections are configured
+      ufw:
+        rule: allow
+        direction: out
+        to_ip: any
+        port: any
+        proto: any
+
