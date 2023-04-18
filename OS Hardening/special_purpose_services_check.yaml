@@ -6,6 +6,8 @@
   tasks:
     - name: Check xserver-xorg installation status
       dpkg_selections:
+        name: xserver-xorg
+        state: present
       register: dpkg_facts
 
     - name: Display installed xserver-xorg packages
