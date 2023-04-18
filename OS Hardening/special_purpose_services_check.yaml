@@ -21,7 +21,7 @@
       - rsync
   tasks:
     - name: Check installation status
-      command: dpkg-query -l "{{ item }}"
+      command: dpkg-query -W -f='${binary:Package}\t${Status}\t${db:Status-Status}\n' "{{ item }}"
       with_items: "{{ services }}"
       ignore_errors: yes
       register: installation_status
