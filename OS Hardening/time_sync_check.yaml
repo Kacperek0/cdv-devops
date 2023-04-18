@@ -12,7 +12,7 @@
 
     - name: Check chrony configuration
       command: |
-        grep -Pr --include=*.{sources,conf} '^\h*(server|pool)\h+\H+' /etc/chrony/
+        cat /etc/chrony/chrony.conf | grep server
       register: chrony_config_chk
 
     - name: Display chrony configuration status
