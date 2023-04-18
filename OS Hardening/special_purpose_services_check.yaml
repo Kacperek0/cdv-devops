@@ -28,7 +28,7 @@
 
     - name: Display installation status for each service
       debug:
-        msg: "{{ item.item.stdout }} if {{ item.stderr == '' }} else {{ item.stderr }}"
+        msg: "{{ item.item.stdout }} if {{ item.item.stderr == '' }} else {{ item.item.stderr }}"
       with_items: "{{ installation_status.results }}"
 
     # # Display message from previous task
