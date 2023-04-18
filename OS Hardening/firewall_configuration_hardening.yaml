@@ -53,3 +53,12 @@
         direction: out
         to_ip: any
 
+    - name: Ensure ufw firewall rules exist for all open ports
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+      with_items:
+        - 22
+        - 68
+
