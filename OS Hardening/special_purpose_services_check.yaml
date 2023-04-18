@@ -12,5 +12,7 @@
 
     - name: Display installed xserver-xorg packages
       debug:
-        msg: "xserver-xorg is {{ dpkg_facts }}"
+        msg: "{{ item }}"
+      with_items: "{{ dpkg_facts.results | selectattr('ansible_facts.dpkg_selections.status', 'equalto', 'install') | list }}"
+
 
