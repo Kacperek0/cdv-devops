@@ -7,7 +7,7 @@
     - name: Check xserver-xorg installation status
       dpkg_selections:
         name: xserver-xorg
-        selection: installed
+        selection: install
       register: dpkg_facts
 
     - name: Display installed xserver-xorg packages
