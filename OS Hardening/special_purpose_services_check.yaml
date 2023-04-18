@@ -1,18 +1,33 @@
 - name: Check Special Purpose Services hardening
   hosts: localhost
   become: yes
-  collections:
-    - community.general
+  vars:
+    services:
+      - xserver-xorg
+      - avahi-daemon
+      - cups
+      - isc-dhcp-server
+      - slapd
+      - nfs-kernel-server
+      - bind9
+      - vsftpd
+      - apache2
+      - dovecot-imapd
+      - dovecot-pop3d
+      - samba
+      - squid
+      - snmp
+      - nis
+      - rsync
   tasks:
-    - name: Check xserver-xorg installation status
+    - name: Check installation status
       command: dpkg-query -l "{{ item }}"
-      with_items:
-        - xserver-xorg
+      with_items: "{{ services }}"
       ignore_errors: yes
-      register: xserver_installed
+      register: installation_status
 
     - name: Display xserver-xorg status
       debug:
-        msg: "xserver-xorg is {{ xserver_installed.results[0].stderr }}"
+        msg: "xserver-xorg is {{ installation_status.results[0].stderr }}"
 
 
