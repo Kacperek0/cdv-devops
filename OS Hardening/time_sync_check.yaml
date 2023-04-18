@@ -11,7 +11,7 @@
         msg: "Time sync is {{ time_sync_chk.stdout }}"
 
     - name: Check chrony configuration
-      script: ./checks/time_sync/chrony_config_chk.sh
+      script: ./checks/time_sync/chrony_conf_chk.sh
       register: chrony_config_chk
 
     - name: Display chrony configuration status
