@@ -62,3 +62,27 @@
         - 22
         - 68
 
+    - name: Ensure allow in for impact statements
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+      with_items:
+        - git
+        - http
+        - https
+
+    - name: Ensure allow out for impact statements
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+        direction: out
+      with_items:
+        - git
+        - http
+        - https
+        - 53
+
+    - name: Turn on uwf logging
+      ufw:
+        logging: on
