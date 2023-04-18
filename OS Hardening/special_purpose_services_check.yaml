@@ -5,13 +5,13 @@
     - community.general
   tasks:
     - name: Check xserver-xorg installation status
-      dpkg_selections:
-        name: xserver-xorg
-        selection: install
-      register: dpkg_facts
+      package_facts:
+        manager: auto
+      register: xserver_installed
 
-    - name: Display installed xserver-xorg packages
+    - name: Display xserver-xorg status
       debug:
-        msg: "xserver-xorg is {{ dpkg_facts }}"
+        msg: "xserver-xorg is {{ xserver_installed.packages['xserver-xorg'] }}"
+      when: xserver_installed is changed
 
 
