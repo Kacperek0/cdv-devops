@@ -30,8 +30,3 @@
       debug:
         msg: "{{ item.stdout if item.stderr == '' else item.stderr }}"
       with_items: "{{ installation_status.results }}"
-
-    # # Display message from previous task
-    # - name: Display message
-    #   debug:
-    #     msg: "The following services are installed: {{ installation_status.results | selectattr('stderr', 'equalto', '') | map(attribute='item') | list | join(', ') }}"

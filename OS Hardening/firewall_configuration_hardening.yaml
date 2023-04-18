@@ -1,0 +1,20 @@
+- name: Firewall Configuration Hardening
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Ensure ufw is installed
+      apt:
+        name: ufw
+        state: present
+
+    - name: Ensure iptables-persistent is not installed with ufw
+      apt:
+        name: iptables-persistent
+        state: absent
+
+    - name: Ensure ufw service is enabled
+      systemd:
+        name: ufw
+        enabled: yes
+        active: yes
+        masked: no
