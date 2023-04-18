@@ -30,9 +30,3 @@
       debug:
         msg: "{{ item.item }} is {{ 'installed' if item.stderr == '' else 'not installed' }}"
       with_items: "{{ installation_status.results }}"
-
-    - name: Display package name and version for each installed package
-      debug:
-        msg: "{{ item.stdout_lines[0] }}"
-      with_items: "{{ installation_status.results }}"
-      when: item.stderr == ''
