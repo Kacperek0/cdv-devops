@@ -4,7 +4,7 @@
   tasks:
     - name: Ensure systemd-journald-remote is installed
       apt:
-        name: systemd-journald-remote
+        name: systemd-journal-remote
         state: present
     - name: Ensure systemd-journal-remote is configured
       lineinfile:
