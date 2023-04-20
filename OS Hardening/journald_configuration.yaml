@@ -2,7 +2,7 @@
   hosts: localhost
   become: yes
   tasks:
-    - name: Ensure systemd-journald-remote is installed
+    - name: Ensure systemd-journal-remote is installed
       apt:
         name: systemd-journal-remote
         state: present
@@ -16,9 +16,9 @@
         - { regexp: '^URL=', line: 'URL=10.0.1.6' }
         - { regexp: '^User=', line: 'User=azureuser'}
         - { regexp: '^Password=', line: 'Password=Q1w2e3r4t5y6.'}
-    - name: Restart systemd-journald-remote
+    - name: Restart systemd-journal-upload
       systemd:
-        name: systemd-journald-remote
+        name: systemd-journal-upload
         state: restarted
 
 
