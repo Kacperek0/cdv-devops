@@ -32,3 +32,64 @@
       systemd:
         name: systemd-journal-remote
         enabled: no
+
+    - name: Enable jounrald service
+      systemd:
+        name: systemd-journald
+        enabled: yes
+
+    - name: Configure journald to compress large log files
+      lineinfile:
+        path: /etc/systemd/journald.conf
+        regexp: '^Compress='
+        line: 'Compress=yes'
+
+    - name: Restart systemd-journald
+      systemd:
+        name: systemd-journald
+        state: restarted
+
+    - name: Configure journald to store logs in persistent storage
+      lineinfile:
+        path: /etc/systemd/journald.conf
+        regexp: '^Storage='
+        line: 'Storage=persistent'
+
+    - name: Restart systemd-journald
+      systemd:
+        name: systemd-journald
+        state: restarted
+
+    - name: Ensure journald is NOT configured to send logs to rsyslog
+      lineinfile:
+        path: /etc/systemd/journald.conf
+        regexp: '^ForwardToSyslog='
+        line: 'ForwardToSyslog=yes'
+        state: absent
+
+    - name: Restart systemd-journald
+      systemd:
+        name: systemd-journald
+        state: restarted
+
+    - name: Ensure log rotation policy
+      lineinfile:
+        path: /etc/systemd/journald.conf
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+      with_items:
+        - { regexp: '^SystemMaxUse=', line: 'SystemMaxUse=100M' }
+        - { regexp: '^SystemKeepFree=', line: 'SystemKeepFree=10M'}
+        - { regexp: '^RuntimeMaxUse=', line: 'RuntimeMaxUse=100M'}
+        - { regexp: '^RuntimeKeepFree=', line: 'RuntimeKeepFree=10M'}
+        - { regexp: '^MaxFileSec=', line: 'MaxFileSec=1month'}
+
+    - name: Ensure journald default file permissions configured
+      file:
+        path: /etc/tmpfiles.d/systemd.conf
+        mode: 0640
+
+    - name: Restart systemd-journald
+      systemd:
+        name: systemd-journald
+        state: restarted
