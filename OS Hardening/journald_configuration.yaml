@@ -6,6 +6,7 @@
       apt:
         name: systemd-journal-remote
         state: present
+
     - name: Ensure systemd-journal-remote is configured
       lineinfile:
         path: /etc/systemd/journal-upload.conf
@@ -16,9 +17,18 @@
         - { regexp: '^URL=', line: 'URL=10.0.1.6' }
         - { regexp: '^User=', line: 'User=azureuser'}
         - { regexp: '^Password=', line: 'Password=Q1w2e3r4t5y6.'}
+
     - name: Restart systemd-journal-upload
       systemd:
         name: systemd-journal-upload
         state: restarted
 
+    - name: Enable systemd-journal-upload
+      systemd:
+        name: systemd-journal-upload
+        enabled: yes
 
+    - name: Disable receiving logs from remote client
+      systemd:
+        name: systemd-journal-remote
+        enabled: no
