@@ -84,6 +84,11 @@
         - { regexp: '^RuntimeKeepFree=', line: 'RuntimeKeepFree=10M'}
         - { regexp: '^MaxFileSec=', line: 'MaxFileSec=1month'}
 
+    - name: Copy journald default file permissions configuration
+      copy:
+        src: /usr/lib/tmpfiles.d/systemd.conf
+        dest: /etc/tmpfiles.d/systemd.conf
+
     - name: Ensure journald default file permissions configured
       file:
         path: /etc/tmpfiles.d/systemd.conf
