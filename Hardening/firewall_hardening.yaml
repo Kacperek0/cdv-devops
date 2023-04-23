@@ -56,3 +56,25 @@
       ufw:
         rule: allow
         direction: out
+
+    - name: Create firewall rules for all open TCP ports
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+      with_items:
+        - 80
+        - 53
+        - 22
+
+    - name: Create firewall rules for all open UDP ports
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: udp
+      with_items:
+        - 53
+        - 68
+        - 323
+
+
