@@ -1,0 +1,28 @@
+- name: 2 - Services hardening
+  hosts: localhost
+  become: yes
+  vars:
+    services:
+      - xserver-xorg*
+      - avahi-daemon
+      - cups
+      - isc-dhcp-server
+      - slapd
+      - nfs-kernel-server
+      - bind9
+      - vsftpd
+      - apache2
+      - nginx
+      - dovecot-imapd
+      - dovecot-pop3d
+      - samba
+      - squid
+      - snmpd
+      - rsync
+      - nis
+      - exim4
+  tasks:
+    - name: Ensure service is not installed
+      apt:
+        name: "{{ services }}"
+        state: absent
