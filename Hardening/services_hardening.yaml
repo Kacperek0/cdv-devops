@@ -24,5 +24,6 @@
   tasks:
     - name: Ensure service is not installed
       apt:
-        name: "{{ services }}"
+        name: "{{ item }}"
         state: absent
+      with_items: "{{ services }}"
