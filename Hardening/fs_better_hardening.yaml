@@ -1,22 +1,25 @@
 - name: Harden unused FS
   hosts: localhost
   become: yes
+  vars:
+    paths:
+      - /tmp
+      - /var/tmp
+      - /var/log
+      - /var/log/audit
+      - /home
+      - /srv
+      - /opt
+      - /usr/local
+      - /media
+      - /mnt
+      - /root
+      - /boot
   tasks:
     - name: Disable cramfs
       mount:
         path: "{{ item }}"
         fstype: cramfs
         state: absent
-      with_items:
-        - /tmp
-        - /var/tmp
-        - /var/log
-        - /var/log/audit
-        - /home
-        - /srv
-        - /opt
-        - /usr/local
-        - /media
-        - /mnt
-        - /root
-        - /boot
+      with_items: "{{ paths }}"
+
