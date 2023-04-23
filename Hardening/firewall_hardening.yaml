@@ -40,6 +40,15 @@
         direction: out
         interface: lo
 
-# ufw deny in from 127.0.0.0/8
-# ufw deny in from ::1
+    - name: Deny incoming traffic on loopback interface
+      ufw:
+        rule: deny
+        direction: in
+        from_ip: 127.0.0.0/8
+
+    - name: Deny incoming traffic from ::1
+      ufw:
+        rule: deny
+        direction: in
+        from_ip: ::1
 
