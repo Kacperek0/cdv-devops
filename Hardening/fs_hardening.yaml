@@ -1,0 +1,11 @@
+- name: Harden unused FS
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Disable cramfs
+      script: ./hardening/cramfs_hardening.sh
+      register: cramfs_hardening
+
+    - name: Cramfs status
+      debug:
+        msg: "{{ cramfs_hardening }}"
