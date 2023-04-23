@@ -18,3 +18,30 @@
     - name: Freevsfx status
       debug:
         msg: "{{ freevsfx_hardening.stderr }}"
+
+    - name: Disable hfs
+      script: ./hardening/hfs_hardening.sh
+      ignore_errors: yes
+      register: hfs_hardening
+
+    - name: Hfs status
+      debug:
+        msg: "{{ hfs_hardening.stderr }}"
+
+    - name: Disable hfsplus
+      script: ./hardening/hfsplus_hardening.sh
+      ignore_errors: yes
+      register: hfsplus_hardening
+
+    - name: Hfsplus status
+      debug:
+        msg: "{{ hfsplus_hardening.stderr }}"
+
+    - name: Disable jffs2
+      script: ./hardening/jffs2_hardening.sh
+      ignore_errors: yes
+      register: jffs2_hardening
+
+    - name: Jffs2 status
+      debug:
+        msg: "{{ jffs2_hardening.stderr }}"
