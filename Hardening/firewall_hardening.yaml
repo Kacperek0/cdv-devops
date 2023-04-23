@@ -28,4 +28,18 @@
       ufw:
         state: enabled
 
+    - name: Allow incoming traffic on loopback interface
+      ufw:
+        rule: allow
+        direction: in
+        interface: lo
+
+    - name: Allow outgoing traffic on loopback interface
+      ufw:
+        rule: allow
+        direction: out
+        interface: lo
+
+# ufw deny in from 127.0.0.0/8
+# ufw deny in from ::1
 
