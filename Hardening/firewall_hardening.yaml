@@ -1,0 +1,31 @@
+- name: Firewall configuration hardening
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Ensure ufw is installed
+      apt:
+        name: ufw
+        state: present
+
+    - name: Ensure iptables-persistent are not installed
+      apt:
+        name: iptables-persistent
+        state: absent
+
+    - name: Ensure SSH connection
+      ufw:
+        rule: allow
+        proto: tcp
+        port: 22
+
+    - name: Enable ufw service
+      systemd:
+        name: ufw
+        enabled: true
+        state: started
+
+    - name: Enable ufw
+      ufw:
+        state: enabled
+
+    
