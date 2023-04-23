@@ -19,3 +19,18 @@
         enabled: false
         masked: true
 
+    - name: Configure chrony
+      lineinfile:
+        path: /etc/chrony/chrony.conf
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+      with_items:
+        - regexp: "^pool ntp.ubuntu.com"
+          line: "pool ntp.ubuntu.com        iburst maxsources 4"
+        - regexp: "^pool 0.ubuntu.pool.ntp.org"
+          line: "pool 0.ubuntu.pool.ntp.org iburst maxsources 1"
+        - regexp: "^pool 1.ubuntu.pool.ntp.org"
+          line: "pool 1.ubuntu.pool.ntp.org iburst maxsources 1"
+        - regexp: "^pool 2.ubuntu.pool.ntp.org"
+          line: "pool 2.ubuntu.pool.ntp.org iburst maxsources 2"
