@@ -9,3 +9,11 @@
     - name: Cramfs status
       debug:
         msg: "{{ cramfs_hardening.stdout }}"
+
+    - name: Disable freevsfx
+      script: ./hardening/freevsfx_hardening.sh
+      register: freevsfx_hardening
+
+    - name: Freevsfx status
+      debug:
+        msg: "{{ freevsfx_hardening.stdout }}"
