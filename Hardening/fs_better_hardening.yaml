@@ -1,0 +1,14 @@
+- name: Harden unused FS
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Disable cramfs
+      mount:
+        path: /tmp
+        fstype: cramfs
+        state: absent
+      register: cramfs_hardening
+
+    - name: Show results
+      debug:
+        msg: "{{ cramfs_hardening }}"
