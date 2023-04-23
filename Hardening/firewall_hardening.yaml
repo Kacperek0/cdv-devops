@@ -16,7 +16,7 @@
       ufw:
         rule: allow
         proto: tcp
-        port: 22
+        port: '22'
 
     - name: Enable ufw service
       systemd:
@@ -28,4 +28,4 @@
       ufw:
         state: enabled
 
-    
+
