@@ -17,5 +17,5 @@
         name: systemd-timesyncd
         state: stopped
         enabled: false
-        masked: false
+        masked: true
 
