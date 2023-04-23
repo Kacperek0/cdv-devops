@@ -77,4 +77,28 @@
         - "68"
         - "323"
 
+    - name: Remediation for impact statement before deny all - outcoming traffic
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+        direction: out
+      with_items:
+        - git
+        - "53"
+
+    - name: Remediation for impact statement before deny all - incoming traffic
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+        direction: in
+      with_items:
+        - git
+        - http
+        - https
+
+    - name: Turn on ufw logging
+      ufw:
+        logging: on
 
