@@ -22,12 +22,20 @@
         - regexp: "^Password="
           line: "Password=Q1w2e3r4t5y6."
 
-    - name: Restart journal-remote
+    - name: Restart journal-upload
       systemd:
-        name: systemd-journal-remote
+        name: systemd-journal-upload
         state: restarted
 
     - name: Enable journal-remote
       systemd:
-        name: systemd-journal-remote
+        name: systemd-journal-upload.service
         enabled: true
+
+    - name: Disable journal remote socked
+      systemd:
+        name: systemd-journal-remote.socket
+        enabled: false
+
+    # - name: Enable jounald service
+    #   sys
