@@ -37,5 +37,18 @@
         name: systemd-journal-remote.socket
         enabled: false
 
-    # - name: Enable jounald service
-    #   sys
+    - name: Enable jounald service
+      systemd:
+        name: systemd-journald.service
+        enabled: true
+
+    - name: Compress large logs
+      lineinfile:
+        path: /etc/systemd/journald.conf
+        regexp: "^Compress=yes"
+        line: "Compress=yes"
+
+    - name: Restart journald
+      systemd:
+        name: systemd-journald
+        state: restarted
