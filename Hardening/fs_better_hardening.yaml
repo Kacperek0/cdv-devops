@@ -4,11 +4,19 @@
   tasks:
     - name: Disable cramfs
       mount:
-        path: /tmp
+        path: "{{ item }}"
         fstype: cramfs
         state: absent
-      register: cramfs_hardening
-
-    - name: Show results
-      debug:
-        msg: "{{ cramfs_hardening }}"
+      with_items:
+        - /tmp
+        - /var/tmp
+        - /var/log
+        - /var/log/audit
+        - /home
+        - /srv
+        - /opt
+        - /usr/local
+        - /media
+        - /mnt
+        - /root
+        - /boot
