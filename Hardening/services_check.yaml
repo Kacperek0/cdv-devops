@@ -31,3 +31,9 @@
       debug:
         msg: "{{ item.stdout if item.stderr == '' else item.stderr }}"
       with_items: "{{ installation_status.results }}"
+
+    - name: List installed packages only
+      debug:
+        msg: "{{ item.stdout_lines[0] }}"
+      with_items: "{{ installation_status.results }}"
+      when: item.stderr == ''
