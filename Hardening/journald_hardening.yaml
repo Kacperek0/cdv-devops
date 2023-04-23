@@ -8,19 +8,19 @@
         name: systemd-journal-remote
         state: present
 
-    # - name: Configure journal-remote
-    #   lineinfile:
-    #     path: /etc/systemd/journal-upload.conf
-    #     regexp: "{{ item.regexp }}"
-    #     line: "{{ item.line }}"
-    #     state: present
-    #   with_items:
-    #     - regexp: "^URL="
-    #       line: "URL=10.0.1.4"
-    #     - regexp: "^User="
-    #       line: "User=azureuser"
-    #     - regexp: "^Password="
-    #       line: "Password=Q1w2e3r4t5y6."
+    - name: Configure journal-remote
+      lineinfile:
+        path: /etc/systemd/journal-upload.conf
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+      with_items:
+        - regexp: "^URL="
+          line: "URL=10.0.1.4"
+        - regexp: "^User="
+          line: "User=azureuser"
+        - regexp: "^Password="
+          line: "Password=Q1w2e3r4t5y6."
 
     - name: Restart journal-remote
       systemd:
