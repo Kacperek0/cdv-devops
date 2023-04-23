@@ -34,3 +34,11 @@
           line: "pool 1.ubuntu.pool.ntp.org iburst maxsources 1"
         - regexp: "^pool 2.ubuntu.pool.ntp.org"
           line: "pool 2.ubuntu.pool.ntp.org iburst maxsources 2"
+        - regexp: "^user"
+          line: "user _chrony"
+
+    - name: Restart chrony and ensure it is enabled
+      systemd:
+        name: chrony
+        state: restarted
+        enabled: true
