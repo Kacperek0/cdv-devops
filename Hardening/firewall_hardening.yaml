@@ -102,3 +102,18 @@
       ufw:
         logging: 'on'
 
+    - name: Deny all incoming traffic by default
+      ufw:
+        default: deny
+        direction: incoming
+
+    - name: Deny all outgoing traffic by default
+      ufw:
+        default: deny
+        direction: outgoing
+
+    - name: Deny all routed traffic by default
+      ufw:
+        default: deny
+        direction: routed
+
