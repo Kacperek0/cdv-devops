@@ -30,3 +30,23 @@
         state: absent
       with_items: "{{ paths }}"
 
+    - name: Disable hfs
+      mount:
+        path: "{{ item }}"
+        fstype: hfs
+        state: absent
+      with_items: "{{ paths }}"
+
+    - name: Disable hfsplus
+      mount:
+        path: "{{ item }}"
+        fstype: hfsplus
+        state: absent
+      with_items: "{{ paths }}"
+
+    - name: Disable jffs2
+      mount:
+        path: "{{ item }}"
+        fstype: jffs2
+        state: absent
+      with_items: "{{ paths }}"
