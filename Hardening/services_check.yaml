@@ -31,4 +31,3 @@
       debug:
         msg: "{{ item.stdout if item.stderr == '' else item.stderr }}"
       with_items: "{{ installation_status.results }}"
-      no_log: true
