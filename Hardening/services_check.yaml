@@ -31,3 +31,4 @@
       debug:
         msg: "{{ item.stderr }}"
       with_items: "{{ installation_status.results }}"
+      when: "{{ item.stdout == '' }}"
