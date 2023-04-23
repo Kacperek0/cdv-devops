@@ -26,8 +26,9 @@
       with_items: "{{ services }}"
       ignore_errors: yes
       register: installation_status
+      when: "'installed' in item.stdout"
 
     - name: Installation status
       debug:
-        msg: "{{ item.stdout if item.stderr == '' else item.stderr }}"
+        msg: "{{ item.stdout }}"
       with_items: "{{ installation_status.results }}"
