@@ -1,0 +1,21 @@
+- name: Time synchonization hardening
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Ensure chrony is installed
+      apt:
+        name: chrony
+        state: present
+
+    - name: Purge ntp
+      apt:
+        name: ntp
+        state: absent
+
+    - name: Stop and mask systemd-timesyncd
+      systemd:
+        name: systemd-timesyncd
+        state: stopped
+        enabled: false
+        masked: false
+
