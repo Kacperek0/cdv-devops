@@ -8,4 +8,4 @@
 
     - name: Cramfs status
       debug:
-        msg: "{{ cramfs_hardening }}"
+        msg: "{{ cramfs_hardening.stdout }}"
