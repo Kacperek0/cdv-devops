@@ -17,4 +17,4 @@
 
     - name: Freevsfx status
       debug:
-        msg: "{{ freevsfx_hardening.stdout }}"
+        msg: "{{ freevsfx_hardening.stderr }}"
