@@ -101,5 +101,4 @@
     - name: Turn on ufw logging
       ufw:
         logging: on
-        log: true
 
