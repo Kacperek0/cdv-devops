@@ -31,4 +31,4 @@
       debug:
         msg: "{{ item.stdout if item.stderr == '' else item.stderr }}"
       with_items: "{{ installation_status.results }}"
-      when: "{{ ['ok'] in item.stdout }}"
+      when: "{{ 'ok' in item.stdout }}"
