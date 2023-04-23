@@ -50,3 +50,17 @@
         fstype: jffs2
         state: absent
       with_items: "{{ paths }}"
+
+    - name: Disable squashfs
+      mount:
+        path: "{{ item }}"
+        fstype: squashfs
+        state: absent
+      with_items: "{{ paths }}"
+
+    - name: Disable udf
+      mount:
+        path: "{{ item }}"
+        fstype: udf
+        state: absent
+      with_items: "{{ paths }}"
