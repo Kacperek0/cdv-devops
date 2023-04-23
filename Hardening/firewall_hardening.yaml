@@ -52,3 +52,7 @@
         direction: in
         from_ip: ::1
 
+    - name: Configure outbound connections
+      ufw:
+        rule: allow
+        direction: out
