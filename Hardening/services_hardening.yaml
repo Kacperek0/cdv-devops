@@ -1,3 +1,4 @@
+# CIS Benchmark for Ubuntu 20.04
 - name: 2 - Services hardening
   hosts: localhost
   become: yes

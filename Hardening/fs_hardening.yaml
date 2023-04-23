@@ -1,3 +1,4 @@
+# CIS Benchmark for Ubuntu 20.04
 - name: Harden unused FS
   hosts: localhost
   become: yes

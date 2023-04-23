@@ -1,3 +1,4 @@
+# CIS Benchmark for Ubuntu 20.04
 - name: Firewall configuration hardening
   hosts: localhost
   become: yes

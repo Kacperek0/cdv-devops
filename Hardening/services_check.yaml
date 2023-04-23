@@ -1,3 +1,4 @@
+# CIS Benchmark for Ubuntu 20.04
 - name: Check special purpose services hardening
   hosts: localhost
   become: yes

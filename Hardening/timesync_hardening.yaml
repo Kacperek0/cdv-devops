@@ -1,3 +1,4 @@
+# CIS Benchmark for Ubuntu 20.04
 - name: Time synchonization hardening
   hosts: localhost
   become: yes

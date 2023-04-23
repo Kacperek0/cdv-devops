@@ -1,0 +1,9 @@
+# Benchmark for Ubuntu 22.04 LTS
+- name: Configure logging for journal
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Install journal remote
+      apt:
+        name: systemd-journal-remote
+        state: present
