@@ -8,7 +8,7 @@
 
     - name: Display cramfs status
       debug:
-        msg: "cramsf is {{ cramfs_chk.stdout }}"
+        msg: "cramsf is {{ cramfs_chk.stdout if cramfs_chk.stdout == '' else cramfs_chk.stderr }}"
 
     - name: Check freevsfs
       script: ./checks/freevsfs_chk.sh
@@ -16,7 +16,7 @@
 
     - name: Display freevsfs status
       debug:
-        msg: "freevsfs is {{ freevsfx_chk.stdout }}"
+        msg: "freevsfs is {{ freevsfs_chk.stdout if freevsfs_chk.stdout == '' else freevsfs_chk.stderr }}"
 
     - name: Check hfs
       script: ./checks/hfs_chk.sh
