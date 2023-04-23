@@ -12,10 +12,10 @@
 
     - name: Check freevsfs
       script: ./checks/freevsfs_chk.sh
+      ignore_errors: yes
       register: freevsfx_chk
 
     - name: Display freevsfs status
-      ignore_errors: yes
       debug:
         msg: "freevsfs is {{ freevsfs_chk.stdout if freevsfs_chk.stdout == '' else freevsfs_chk.stderr }}"
 
