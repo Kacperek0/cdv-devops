@@ -23,3 +23,10 @@
         state: absent
       with_items: "{{ paths }}"
 
+    - name: Disable freevsfx
+      mount:
+        path: "{{ item }}"
+        fstype: freevsfx
+        state: absent
+      with_items: "{{ paths }}"
+
