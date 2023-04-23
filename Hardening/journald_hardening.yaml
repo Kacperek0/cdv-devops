@@ -45,8 +45,13 @@
     - name: Compress large logs
       lineinfile:
         path: /etc/systemd/journald.conf
-        regexp: "^Compress=yes"
-        line: "Compress=yes"
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+      with_items:
+        - regexp: "^Compress=yes"
+          line: "Compress=yes"
+        - regexp: "^Storage=persistent"
+          line: "Storage=persistent"
 
     - name: Restart journald
       systemd:
