@@ -105,8 +105,9 @@
     - name: Deny all listed traffics by default
       ufw:
         default: deny
-        direction:
-          - incoming
-          - outgoing
-          - routed
+        direction: "{{ item }}"
+      with_items:
+        - incoming
+        - outgoing
+        - routed
 
