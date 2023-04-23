@@ -12,6 +12,7 @@
 
     - name: Disable freevsfx
       script: ./hardening/freevsfx_hardening.sh
+      ignore_errors: yes
       register: freevsfx_hardening
 
     - name: Freevsfx status
