@@ -36,7 +36,7 @@ jobs:
         run: |
           terraform plan \
           --var="application=${{ env.application }}" \
-          --var="environments=["dev", "test"]" \
+          --var="environments=[\"dev\", \"test\"]" \
           --var="owner=${{ env.owner }}" \
           --var="location=${{ env.location }}" \
           --var="prefix=${{ env.prefix }}" \
