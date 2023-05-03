@@ -1,14 +1,10 @@
-name: Check Terraform code
+name: Deploy infrastructure
 
 on:
-  push:
-    paths:
-      - "Terraform/**"
-      - ".github/workflows/tf-push.yaml"
   pull_request:
     paths:
       - "Terraform/**"
-      - ".github/workflows/tf-push.yaml"
+      - ".github/workflows/tf-deploy.yaml"
 
 jobs:
   terraform:
@@ -19,6 +15,12 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      application: ${{ vars.application }}
+      owner: ${{ vars.owner }}
+      location: ${{ vars.location }}
+      prefix: ${{ vars.prefix }}}
+      admin_password: ${{ secrets.ADMIN_PASSWORD }}
+      environment: ${{ vars.environment }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -47,13 +49,22 @@ jobs:
           --var="location=${{ env.location }}" \
           --var="prefix=${{ env.prefix }}" \
           --var="admin_password=${{ env.admin_password }}" \
-          --var="environment=${{ env.environment }}"
+          --var="environment=${{ env.environment }}" \
+          --out=tfplan
         working-directory: ./Terraform
-        env:
-          application: ${{ vars.application }}
-          owner: ${{ vars.owner }}
-          location: ${{ vars.location }}
-          prefix: ${{ vars.prefix }}}
-          admin_password: ${{ secrets.ADMIN_PASSWORD }}
-          environment: ${{ vars.environment }}
 
+      - name: Terraform apply
+        run: terraform apply tfplan
+        working-directory: ./Terraform
+
+  approval:
+    name: Approval
+    runs-on: ubuntu-latest
+    outputs:
+      approval: ${{ steps.approval.outputs.approval }}
+    steps:
+      - name: Approval Prompt
+        id: approval
+        run: echo ::set-output name=approved::$(read -p "Do you approve the deployment? (y/n) " ans; echo "$ans" | tr '[:upper:]' '[:lower:]')
+      - name: Approval Check
+        run: exit ${{ steps.approval.outputs.approved == 'y' }}
