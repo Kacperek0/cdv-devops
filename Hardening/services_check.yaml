@@ -1,0 +1,35 @@
+# CIS Benchmark for Ubuntu 20.04
+- name: Check special purpose services hardening
+  hosts: localhost
+  become: yes
+  vars:
+    services:
+      - xserver-xorg
+      - avahi-daemon
+      - cups
+      - isc-dhcp-server
+      - slapd
+      - nfs-kernel-server
+      - bind9
+      - vsftpd
+      - apache2
+      - nginx
+      - dovecot-imapd
+      - dovecot-pop3d
+      - samba
+      - squid
+      - snmp
+      - nis
+      - rsync
+  tasks:
+    - name: Check installation status
+      command: dpkg-query -W -f='${binary:Package}\t${Status}\t${db:Status-Status}\n' "{{ item }}"
+      with_items: "{{ services }}"
+      ignore_errors: yes
+      register: installation_status
+
+    - name: Installation status
+      debug:
+        msg: "{{ item.stdout if item.stderr == '' else item.stderr }}"
+      with_items: "{{ installation_status.results }}"
+      when: "{{ 'ok installed' in item.stdout }}"

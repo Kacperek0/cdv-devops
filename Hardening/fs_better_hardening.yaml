@@ -1,0 +1,67 @@
+# CIS Benchmark for Ubuntu 20.04
+- name: Harden unused FS
+  hosts: localhost
+  become: yes
+  vars:
+    paths:
+      - /tmp
+      - /var/tmp
+      - /var/log
+      - /var/log/audit
+      - /home
+      - /srv
+      - /opt
+      - /usr/local
+      - /media
+      - /mnt
+      - /root
+      - /boot
+  tasks:
+    - name: Disable cramfs
+      mount:
+        path: "{{ item }}"
+        fstype: cramfs
+        state: absent
+      with_items: "{{ paths }}"
+
+    - name: Disable freevsfx
+      mount:
+        path: "{{ item }}"
+        fstype: freevsfx
+        state: absent
+      with_items: "{{ paths }}"
+
+    - name: Disable hfs
+      mount:
+        path: "{{ item }}"
+        fstype: hfs
+        state: absent
+      with_items: "{{ paths }}"
+
+    - name: Disable hfsplus
+      mount:
+        path: "{{ item }}"
+        fstype: hfsplus
+        state: absent
+      with_items: "{{ paths }}"
+
+    - name: Disable jffs2
+      mount:
+        path: "{{ item }}"
+        fstype: jffs2
+        state: absent
+      with_items: "{{ paths }}"
+
+    - name: Disable squashfs
+      mount:
+        path: "{{ item }}"
+        fstype: squashfs
+        state: absent
+      with_items: "{{ paths }}"
+
+    - name: Disable udf
+      mount:
+        path: "{{ item }}"
+        fstype: udf
+        state: absent
+      with_items: "{{ paths }}"

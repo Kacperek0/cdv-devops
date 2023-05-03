@@ -1,0 +1,114 @@
+# CIS Benchmark for Ubuntu 20.04
+- name: Firewall configuration hardening
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Ensure ufw is installed
+      apt:
+        name: ufw
+        state: present
+
+    - name: Ensure iptables-persistent are not installed
+      apt:
+        name: iptables-persistent
+        state: absent
+
+    - name: Ensure SSH connection
+      ufw:
+        rule: allow
+        proto: tcp
+        port: '22'
+
+    - name: Enable ufw service
+      systemd:
+        name: ufw
+        enabled: true
+        state: started
+
+    - name: Enable ufw
+      ufw:
+        state: enabled
+
+    - name: Allow incoming traffic on loopback interface
+      ufw:
+        rule: allow
+        direction: in
+        interface: lo
+
+    - name: Allow outgoing traffic on loopback interface
+      ufw:
+        rule: allow
+        direction: out
+        interface: lo
+
+    - name: Deny incoming traffic on loopback interface
+      ufw:
+        rule: deny
+        direction: in
+        from_ip: 127.0.0.0/8
+
+    - name: Deny incoming traffic from ::1
+      ufw:
+        rule: deny
+        direction: in
+        from_ip: ::1
+
+    - name: Configure outbound connections
+      ufw:
+        rule: allow
+        direction: out
+
+    - name: Create firewall rules for all open TCP ports
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+      with_items:
+        - "80"
+        - "53"
+        - "22"
+
+    - name: Create firewall rules for all open UDP ports
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: udp
+      with_items:
+        - "53"
+        - "68"
+        - "323"
+
+    - name: Remediation for impact statement before deny all - outcoming traffic
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+        direction: out
+      with_items:
+        - git
+        - "53"
+
+    - name: Remediation for impact statement before deny all - incoming traffic
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+        direction: in
+      with_items:
+        - git
+        - http
+        - https
+
+    - name: Turn on ufw logging
+      ufw:
+        logging: 'on'
+
+    - name: Deny all listed traffics by default
+      ufw:
+        default: deny
+        direction: "{{ item }}"
+      with_items:
+        - incoming
+        - outgoing
+        - routed
+

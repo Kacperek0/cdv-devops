@@ -1,0 +1,100 @@
+# Benchmark for Ubuntu 22.04 LTS
+- name: Configure logging for journal
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Install journal remote
+      apt:
+        name: systemd-journal-remote
+        state: present
+
+    - name: Configure journal-remote
+      lineinfile:
+        path: /etc/systemd/journal-upload.conf
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+      with_items:
+        - regexp: "^URL="
+          line: "URL=10.0.1.4"
+        - regexp: "^User="
+          line: "User=azureuser"
+        - regexp: "^Password="
+          line: "Password=Q1w2e3r4t5y6."
+
+    - name: Restart journal-upload
+      systemd:
+        name: systemd-journal-upload
+        state: restarted
+
+    - name: Enable journal-remote
+      systemd:
+        name: systemd-journal-upload.service
+        enabled: true
+
+    - name: Disable journal remote socked
+      systemd:
+        name: systemd-journal-remote.socket
+        enabled: false
+
+    - name: Enable jounald service
+      systemd:
+        name: systemd-journald.service
+        enabled: true
+
+    - name: Compress large logs
+      lineinfile:
+        path: /etc/systemd/journald.conf
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+      with_items:
+        - regexp: "^Compress=yes"
+          line: "Compress=yes"
+        - regexp: "^Storage=persistent"
+          line: "Storage=persistent"
+
+    - name: Restart journald
+      systemd:
+        name: systemd-journald
+        state: restarted
+
+    - name: Disable log forwarding to rsyslog
+      lineinfile:
+        path: /etc/systemd/journald.conf
+        regexp: "^\\s*ForwardToSyslog"
+        line: "ForwardToSyslog=yes"
+        state: absent
+
+    - name: Log rotation policy
+      lineinfile:
+        path: /etc/systemd/journald.conf
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+      with_items:
+        # Fill in with better values :)
+        - regexp: "^SystemMaxUse="
+          line: "SystemMaxUse=100M"
+        - regexp: "^SystemKeepFree="
+          line: "SystemKeepFree=100M"
+        - regexp: "^RuntimeMaxUse="
+          line: "RuntimeMaxUse=100M"
+        - regexp: "^RuntimeKeepFree="
+          line: "RuntimeKeepFree=100M"
+        - regexp: "^MaxFileSec="
+          line: "MaxFileSec=1month"
+
+    - name: Copy journald default file
+      copy:
+        src: /usr/lib/tmpfiles.d/systemd.conf
+        dest: /etc/tmpfiles.d/systemd.conf
+
+    - name: Set default file permissions
+      file:
+        path: /etc/tmpfiles.d/systemd.conf
+        mode: 0640
+
+    - name: Restart journald
+      systemd:
+        name: systemd-journald
+        state: restarted

@@ -1,0 +1,45 @@
+# CIS Benchmark for Ubuntu 20.04
+- name: Unused FS hardening check
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Check cramfs
+      script: ./checks/cramfs_chk.sh
+      register: cramfs_chk
+
+    - name: Display cramfs status
+      debug:
+        msg: "cramsf is {{ cramfs_chk.stdout if cramfs_chk.stdout == '' else cramfs_chk.stderr }}"
+
+    - name: Check freevsfs
+      script: ./checks/freevsfs_chk.sh
+      ignore_errors: yes
+      register: freevsfx_chk
+
+    - name: Display freevsfs status
+      debug:
+        msg: "freevsfs is {{ freevsfs_chk.stdout if freevsfs_chk.stdout == '' else freevsfs_chk.stderr }}"
+
+    - name: Check hfs
+      script: ./checks/hfs_chk.sh
+      register: hfs_chk
+
+    - name: Display hfs status
+      debug:
+        msg: "hfs is {{ hfs_chk.stdout }}"
+
+    - name: Check hfsplus
+      script: ./checks/hfsplus_chk.sh
+      register: hfsplus_chk
+
+    - name: Display hfsplus status
+      debug:
+        msg: "hfsplus is {{ hfsplus_chk.stdout }}"
+
+    - name: Check jffs2
+      script: ./checks/jffs2_chk.sh
+      register: jffs2_chk
+
+    - name: Display jffs2 status
+      debug:
+        msg: "jffs is {{ jffs2_chk.stdout }}"

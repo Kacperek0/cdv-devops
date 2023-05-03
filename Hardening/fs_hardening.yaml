@@ -1,0 +1,48 @@
+# CIS Benchmark for Ubuntu 20.04
+- name: Harden unused FS
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Disable cramfs
+      script: ./hardening/cramfs_hardening.sh
+      register: cramfs_hardening
+
+    - name: Cramfs status
+      debug:
+        msg: "{{ cramfs_hardening.stdout }}"
+
+    - name: Disable freevsfx
+      script: ./hardening/freevsfx_hardening.sh
+      ignore_errors: yes
+      register: freevsfx_hardening
+
+    - name: Freevsfx status
+      debug:
+        msg: "{{ freevsfx_hardening.stderr }}"
+
+    - name: Disable hfs
+      script: ./hardening/hfs_hardening.sh
+      ignore_errors: yes
+      register: hfs_hardening
+
+    - name: Hfs status
+      debug:
+        msg: "{{ hfs_hardening.stderr }}"
+
+    - name: Disable hfsplus
+      script: ./hardening/hfsplus_hardening.sh
+      ignore_errors: yes
+      register: hfsplus_hardening
+
+    - name: Hfsplus status
+      debug:
+        msg: "{{ hfsplus_hardening.stderr }}"
+
+    - name: Disable jffs2
+      script: ./hardening/jffs2_hardening.sh
+      ignore_errors: yes
+      register: jffs2_hardening
+
+    - name: Jffs2 status
+      debug:
+        msg: "{{ jffs2_hardening.stderr }}"

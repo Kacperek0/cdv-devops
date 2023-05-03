@@ -1,0 +1,28 @@
+# CIS Benchmark for Ubuntu 20.04
+- name: 2 - Services hardening
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Ensure service is not installed
+      apt:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - xserver-xorg*
+        - avahi-daemon
+        - cups
+        - isc-dhcp-server
+        - slapd
+        - nfs-kernel-server
+        - bind9
+        - vsftpd
+        - apache2
+        - nginx
+        - dovecot-imapd
+        - dovecot-pop3d
+        - samba
+        - squid
+        - snmpd
+        - rsync
+        - nis
+        - exim4
