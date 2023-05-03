@@ -24,12 +24,12 @@ jobs:
         run: terraform fmt -check
         working-directory: ./Terraform
 
-      - name: Terraform validate
-        run: terraform validate
-        working-directory: ./Terraform
-
       - name: Terraform init
         run: terraform init
+        working-directory: ./Terraform
+
+      - name: Terraform validate
+        run: terraform validate
         working-directory: ./Terraform
 
       - name: Terraform plan
