@@ -2,13 +2,14 @@ name: Check Terraform code
 
 on:
   push:
-    paths:
-      - "Terraform/**"
-      - ".github/workflows/tf-push.yaml"
   pull_request:
     paths:
       - "Terraform/**"
       - ".github/workflows/tf-push.yaml"
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   terraform:

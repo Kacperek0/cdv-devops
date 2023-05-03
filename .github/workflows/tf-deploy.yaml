@@ -5,6 +5,14 @@ on:
     paths:
       - "Terraform/**"
       - ".github/workflows/tf-deploy.yaml"
+    types:
+      - closed
+  push:
+    paths:
+      - "Terraform/**"
+      - ".github/workflows/tf-deploy.yaml"
+    branches:
+      - main
 
 jobs:
   terraform:
@@ -56,15 +64,3 @@ jobs:
       - name: Terraform apply
         run: terraform apply tfplan
         working-directory: ./Terraform
-
-  approval:
-    name: Approval
-    runs-on: ubuntu-latest
-    outputs:
-      approval: ${{ steps.approval.outputs.approval }}
-    steps:
-      - name: Approval Prompt
-        id: approval
-        run: echo ::set-output name=approved::$(read -p "Do you approve the deployment? (y/n) " ans; echo "$ans" | tr '[:upper:]' '[:lower:]')
-      - name: Approval Check
-        run: exit ${{ steps.approval.outputs.approved == 'y' }}
