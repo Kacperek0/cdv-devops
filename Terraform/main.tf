@@ -64,7 +64,7 @@ module "networking" {
 module "bastion" {
   source = "./modules/virtual_machine"
 
-  count = 1
+  count = 2
 
   application         = "bastion"
   environment         = var.environment
