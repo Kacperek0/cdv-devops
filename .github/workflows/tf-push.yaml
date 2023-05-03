@@ -53,7 +53,7 @@ jobs:
           application: ${{ vars.application }}
           owner: ${{ vars.owner }}
           location: ${{ vars.location }}
-          prefix: ${{ vars.prefix }}}
+          prefix: ${{ vars.prefix }}
           admin_password: ${{ secrets.ADMIN_PASSWORD }}
           environment: ${{ vars.environment }}
 
