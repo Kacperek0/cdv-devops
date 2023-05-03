@@ -18,3 +18,5 @@ Terraform/plan
 *.tfstate.backup
 .terraform.*
 
+# VSCode
+.vscode
