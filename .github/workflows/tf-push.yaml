@@ -35,3 +35,12 @@ jobs:
       - name: Terraform plan
         run: terraform plan
         working-directory: ./Terraform
+        env:
+          application: "terraform"
+          environments: "prod"
+          owner: "kacper.szczepanek@cdv.pl"
+          location: "westeurope"
+          prefix: "cdv"
+          admin_password: ${{ secrets.ADMIN_PASSWORD }}
+          environment: "dev"
+
