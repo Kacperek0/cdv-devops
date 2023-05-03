@@ -31,14 +31,15 @@ jobs:
 
       - name: Terraform destroy
         run: |
-          terraform destroy -auto-approve
+          terraform destroy \
           --var="application=${{ env.application }}" \
           --var="environments=[\"dev\", \"test\"]" \
           --var="owner=${{ env.owner }}" \
           --var="location=${{ env.location }}" \
           --var="prefix=${{ env.prefix }}" \
           --var="admin_password=${{ env.admin_password }}" \
-          --var="environment=${{ env.environment }}"
+          --var="environment=${{ env.environment }}" \
+          --auto-approve
         working-directory: ./Terraform
         env:
           application: ${{ vars.application }}
