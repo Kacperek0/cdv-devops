@@ -9,7 +9,7 @@ on:
 
 jobs:
   terraform:
-    name: Terraform
+    name: Deploy infra
     runs-on: ubuntu-latest
     env:
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
