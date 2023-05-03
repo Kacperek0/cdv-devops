@@ -1,8 +1,14 @@
 name: Check Terraform code
 
 on:
-  - push
-  - pull_request
+  push:
+    paths:
+      - "Terraform/**"
+      - ".github/workflows/tf-push.yaml"
+  pull_request:
+    paths:
+      - "Terraform/**"
+      - ".github/workflows/tf-push.yaml"
 
 jobs:
   terraform:
