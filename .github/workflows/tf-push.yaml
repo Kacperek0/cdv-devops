@@ -1,11 +1,9 @@
 name: Check Terraform code
 
 on:
-  push:
   pull_request:
     paths:
       - "Terraform/**"
-      - ".github/workflows/tf-push.yaml"
     types:
       - opened
       - synchronize
