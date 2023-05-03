@@ -36,7 +36,7 @@ jobs:
         run: |
           terraform plan \
           --var="application=${{ env.application }}" \
-          --var="environments=${{ env.environments }}" \
+          --var="environments=['dev', 'test']" \
           --var="owner=${{ env.owner }}" \
           --var="location=${{ env.location }}" \
           --var="prefix=${{ env.prefix }}" \
@@ -45,7 +45,6 @@ jobs:
         working-directory: ./Terraform
         env:
           application: "terraform"
-          environments: "prod"
           owner: "kacper.szczepanek@cdv.pl"
           location: "westeurope"
           prefix: "cdv"
