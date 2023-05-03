@@ -4,15 +4,8 @@ on:
   pull_request:
     paths:
       - "Terraform/**"
-      - ".github/workflows/tf-deploy.yaml"
     types:
       - closed
-  push:
-    paths:
-      - "Terraform/**"
-      - ".github/workflows/tf-deploy.yaml"
-    branches:
-      - main
 
 jobs:
   terraform:
