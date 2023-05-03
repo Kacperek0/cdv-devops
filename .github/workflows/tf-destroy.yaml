@@ -12,6 +12,12 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      application: ${{ vars.application }}
+      owner: ${{ vars.owner }}
+      location: ${{ vars.location }}
+      prefix: ${{ vars.prefix }}
+      admin_password: ${{ secrets.ADMIN_PASSWORD }}
+      environment: ${{ vars.environment }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -24,5 +30,20 @@ jobs:
         working-directory: ./Terraform
 
       - name: Terraform destroy
-        run: terraform destroy -auto-approve
+        run: |
+          terraform destroy -auto-approve
+          --var="application=${{ env.application }}" \
+          --var="environments=[\"dev\", \"test\"]" \
+          --var="owner=${{ env.owner }}" \
+          --var="location=${{ env.location }}" \
+          --var="prefix=${{ env.prefix }}" \
+          --var="admin_password=${{ env.admin_password }}" \
+          --var="environment=${{ env.environment }}"
         working-directory: ./Terraform
+        env:
+          application: ${{ vars.application }}
+          owner: ${{ vars.owner }}
+          location: ${{ vars.location }}
+          prefix: ${{ vars.prefix }}
+          admin_password: ${{ secrets.ADMIN_PASSWORD }}
+          environment: ${{ vars.environment }}
