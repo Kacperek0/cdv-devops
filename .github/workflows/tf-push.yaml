@@ -33,7 +33,15 @@ jobs:
         working-directory: ./Terraform
 
       - name: Terraform plan
-        run: terraform plan
+        run: |
+          terraform plan \
+          --var="application=${{ env.application }}" \
+          --var="environments=${{ env.environments }}" \
+          --var="owner=${{ env.owner }}" \
+          --var="location=${{ env.location }}" \
+          --var="prefix=${{ env.prefix }}" \
+          --var="admin_password=${{ env.admin_password }}" \
+          --var="environment=${{ env.environment }}"
         working-directory: ./Terraform
         env:
           application: "terraform"
