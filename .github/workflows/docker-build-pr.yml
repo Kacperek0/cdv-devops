@@ -7,7 +7,7 @@ on:
       - synchronize
       - reopened
     paths:
-      - "./Kubernetes/fastapi-101-main/**"
+      - "Kubernetes/fastapi-101-main/**"
       
 jobs:
   publish_to_acr:
