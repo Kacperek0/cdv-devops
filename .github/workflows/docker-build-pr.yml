@@ -33,6 +33,7 @@ jobs:
 
       - name: Query container
         run: |
+          sleep 15
           echo "$(curl http://localhost:8000)"
         working-directory: ./Kubernetes/fastapi-101-main
 
