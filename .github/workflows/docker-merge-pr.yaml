@@ -36,15 +36,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install Azure CLI
-        uses: azure/CLI@v1
+      - name: Azure login
+        uses: azure/login@v1
         with:
-          inlineScript: |
-            az login --service-principal -u ${{ secrets.ARM_CLIENT_ID }} -p ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }}
-            az aks get-credentials --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_AKS_NAME }}
-            kubectl run pod fastapi-pod --image ${{ secrets.ACR_REGISTRY }}.azurecr.io/fastapi-101:latest --port 8000
-            kubectl expose pod fastapi-pod --port=80 --target-port=8000 --type=LoadBalancer --name=fastapi-service
-        env:
-            AZURE_RESOURCE_GROUP: static-webhosting-rg
-            AZURE_AKS_NAME: kacper-test-aks
+          client-id: ${{ secrets.ARM_CLIENT_ID }}
+          client-secret: ${{ secrets.ARM_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.ARM_TENANT_ID }}
+
+      - name: Set AKS context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: static-webhosting-rg
+          cluster-name: kacper-aks-test
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Deploy to AKS
+        uses: azure/k8s-deploy@v4
+        with:
+          namespace: default
+          manifests: |
+            Kubernetes/fastapi-101-main/k8s/deployment.yaml
+          images: |
+            ${{ secrets.ACR_REGISTRY }}.azurecr.io/fastapi-101:latest
 
