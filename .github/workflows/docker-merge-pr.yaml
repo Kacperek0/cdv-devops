@@ -45,7 +45,7 @@ jobs:
         uses: azure/aks-set-context@v3
         with:
           resource-group: static-webhosting-rg
-          cluster-name: kacper-aks-test
+          cluster-name: kacper-test-aks
 
       - name: Setup kubectl
         uses: azure/setup-kubectl@v3
