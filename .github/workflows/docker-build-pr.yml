@@ -36,7 +36,7 @@ jobs:
         working-directory: ./Kubernetes/fastapi-101-main
 
       - name: Run container
-        run: docker run -d -p 8000:8000 --name fastapi-101 --network container:postgres fastapi-101
+        run: docker run -d -p 8000:8000 --name fastapi-101 fastapi-101
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
