@@ -8,17 +8,33 @@ on:
       - reopened
     paths:
       - "Kubernetes/fastapi-101-main/**"
-      
+  push:
+    branches:
+      - main
+    paths:
+      - "Kubernetes/fastapi-101-main/**"
+      - ".github/workflows/docker-build-pr.yml"
+
 jobs:
   publish_to_acr:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-     
+
       - name: Build image
         run: docker build . -t fastapi-101
         working-directory: ./Kubernetes/fastapi-101-main
 
-      
+      - name: Run container
+        run: docker run -d -p 8000:8000 fastapi-101
+        working-directory: ./Kubernetes/fastapi-101-main
+
+      - name: Query container
+        run: curl http://localhost:8000
+        working-directory: ./Kubernetes/fastapi-101-main
+
+      - name: Shutdown container
+        run: docker stop $(docker ps -q --filter ancestor=fastapi-101 )
+        working-directory: ./Kubernetes/fastapi-101-main
