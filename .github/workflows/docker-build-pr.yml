@@ -41,7 +41,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
-          POSTGRES_HOST: postgres
+          POSTGRES_HOST: 127.0.0.1
         working-directory: ./Kubernetes/fastapi-101-main
 
       - name: Query container
