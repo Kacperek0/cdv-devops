@@ -113,6 +113,10 @@ def delete_post(
     return post
 
 
+@app.get('/')
+def index():
+    return {'200': 'OK'}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run('main:app', host='0.0.0.0', port=8000, reload=True)
