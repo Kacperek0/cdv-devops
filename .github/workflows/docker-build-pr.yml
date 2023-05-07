@@ -39,14 +39,9 @@ jobs:
         run: docker ps
         working-directory: ./Kubernetes/fastapi-101-main
 
-      - name: Test PostgreSQL connectivity
-        run: docker run --rm --network container:postgres postgres psql -h localhost -U postgres -d postgres -c "SELECT 1"
-
-
       - name: Run container
-        run: docker run -d -p 8000:8000 --name fastapi-101 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_HOST=postgres fastapi-101
+        run: docker run -d -p 8000:8000 --name fastapi-101 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_HOST=localhost fastapi-101
         working-directory: ./Kubernetes/fastapi-101-main
-
 
       - name: Query container
         run: |
