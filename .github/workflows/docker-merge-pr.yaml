@@ -48,5 +48,5 @@ jobs:
 
       - name: Deploy to AKS
         run: |
-          kubectl create pod fastapi-pod --image ${{ secrets.ACR_REGISTRY }}.azurecr.io/fastapi-101:latest
+          kubectl run pod fastapi-pod --image ${{ secrets.ACR_REGISTRY }}.azurecr.io/fastapi-101:latest
           kubectl expose pod fastapi-pod --port=80 --target-port=8000 --type=LoadBalancer --name=fastapi-service
