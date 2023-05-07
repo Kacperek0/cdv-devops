@@ -1,0 +1,28 @@
+name: Publish container to ACR
+on:
+  pull_request:
+    types:
+      - closed
+    paths:
+      - "Kubernetes/fastapi-101-main/**"
+  push:
+
+jobs:
+  publish-to-acr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Docker login
+        uses: docker/login-action@v2
+        with:
+            registry: ${{ secrets.ACR_REGISTRY }}.azurecr.io
+            username: ${{ secrets.ACR_REGISTRY }}
+            password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ${{ secrets.ACR_REGISTRY }}.azurecr.io/fastapi-101-main:latest
