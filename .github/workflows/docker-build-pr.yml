@@ -29,13 +29,13 @@ jobs:
           - 5432:5432
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Build image
         run: docker build . -t fastapi-101
         working-directory: ./Kubernetes/fastapi-101-main
       - name: Run container
-        run: docker run -d -p 8000:8000 --name fastapi-101 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_HOST=127.0.0.1 fastapi-101
+        run: docker run -d -p 8000:8000 --name fastapi-101 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_HOST=localhost fastapi-101
         working-directory: ./Kubernetes/fastapi-101-main
 
       - name: Query container
