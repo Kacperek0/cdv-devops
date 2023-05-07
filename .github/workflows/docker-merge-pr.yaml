@@ -36,15 +36,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install Azure CLI
-        uses: azure/setup-azure-cli@v1
-        with:
-          version: latest
-
       - name: AKS Login
-        run: |
-          az login --service-principal -u ${{ secrets.ARM_CLIENT_ID }} -p ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }}
-          az aks get-credentials --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_AKS_NAME }}
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az login --service-principal -u ${{ secrets.ARM_CLIENT_ID }} -p ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }}
+            az aks get-credentials --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_AKS_NAME }}
         env:
             AZURE_RESOURCE_GROUP: static-webhosting-rg
             AZURE_AKS_NAME: kacper-test-aks
+
+      - name: Deploy to AKS
+        run: |
+          kubectl create pod fastapi-pod --image=${{ secrets.ACR_REGISTRY }}.azurecr.io/fastapi-101:latest
+          kubectl expose pod fastapi-pod --port=80 --target-port=8000 --type=LoadBalancer --name=fastapi-service
