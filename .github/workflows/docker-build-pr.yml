@@ -8,12 +8,6 @@ on:
       - reopened
     paths:
       - "Kubernetes/fastapi-101-main/**"
-  push:
-    branches:
-      - main
-    paths:
-      - "Kubernetes/fastapi-101-main/**"
-      - ".github/workflows/docker-build-pr.yml"
 
 jobs:
   build:
