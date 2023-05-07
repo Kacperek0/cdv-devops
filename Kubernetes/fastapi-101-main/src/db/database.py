@@ -4,12 +4,11 @@ import sqlalchemy as sql
 import sqlalchemy.ext.declarative as declarative
 import sqlalchemy.orm as orm
 
-from dotenv import load_dotenv
+POSTGRES_USER = os.getenv("POSTGRES_USER")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST")
 
-load_dotenv()
-
-
-SQLALCHEMY_DATABASE_URL = f"sqlite:///./database.db"
+SQLALCHEMY_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/postgres"
 
 engine = sql.create_engine(
     SQLALCHEMY_DATABASE_URL
