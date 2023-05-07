@@ -40,7 +40,7 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az login --service-principal -u ${{ secrets.ARM_CLIENT_ID }} -p ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }}
+            az login --service-principal -u ${{ secrets.ARM_CLIENT_ID }} -p ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }} --subscription ${{ secrets.ARM_SUBSCRIPTION_ID }}
             az aks get-credentials --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --name ${{ env.AZURE_AKS_NAME }}
         env:
             AZURE_RESOURCE_GROUP: static-webhosting-rg
@@ -48,5 +48,5 @@ jobs:
 
       - name: Deploy to AKS
         run: |
-          kubectl create pod fastapi-pod --image=${{ secrets.ACR_REGISTRY }}.azurecr.io/fastapi-101:latest
+          kubectl create pod fastapi-pod --image ${{ secrets.ACR_REGISTRY }}.azurecr.io/fastapi-101:latest
           kubectl expose pod fastapi-pod --port=80 --target-port=8000 --type=LoadBalancer --name=fastapi-service
