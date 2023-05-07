@@ -21,8 +21,10 @@ jobs:
             username: ${{ secrets.ACR_REGISTRY }}
             password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: ${{ secrets.ACR_REGISTRY }}.azurecr.io/fastapi-101-main:latest
+      - name: Build image
+        run: docker build . -t ${{ secrets.ACR_REGISTRY }}.azurecr.io/fastapi-101:latest
+        working-directory: ./Kubernetes/fastapi-101-main
+
+      - name: Push image
+        run: docker push ${{ secrets.ACR_REGISTRY }}.azurecr.io/fastapi-101:latest
+        working-directory: ./Kubernetes/fastapi-101-main
