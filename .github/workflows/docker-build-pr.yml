@@ -31,6 +31,10 @@ jobs:
 
         working-directory: ./Kubernetes/fastapi-101-main
 
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Query container
         run: |
           sleep 15
