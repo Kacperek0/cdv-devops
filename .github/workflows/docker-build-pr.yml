@@ -18,26 +18,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ubuntu:latest
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
-        ports:
-          - 5432:5432
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Build image
         run: docker build . -t fastapi-101
-        working-directory: ./Kubernetes/fastapi-101-main
-
-      - name: List running containers
-        run: docker ps
         working-directory: ./Kubernetes/fastapi-101-main
 
       - name: Run container
@@ -48,10 +34,6 @@ jobs:
         run: |
           sleep 15
           echo "$(curl http://localhost:8000)"
-        working-directory: ./Kubernetes/fastapi-101-main
-
-      - name: Container logs
-        run: docker logs fastapi-101
         working-directory: ./Kubernetes/fastapi-101-main
 
       - name: Shutdown container
