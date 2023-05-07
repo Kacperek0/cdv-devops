@@ -55,7 +55,7 @@ jobs:
         with:
           namespace: default
           manifests: |
-            Kubernetes/fastapi-101-main/k8s/deployment.yaml
+            Kubernetes/fastapi-101-main/deployment.yaml
           images: |
             ${{ secrets.ACR_REGISTRY }}.azurecr.io/fastapi-101:latest
 
