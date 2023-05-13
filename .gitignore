@@ -22,3 +22,6 @@ Terraform/plan
 .vscode
 
 # Just testing
+
+# Ignore C++
+*.cpp
