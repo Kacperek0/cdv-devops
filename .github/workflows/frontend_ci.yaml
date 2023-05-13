@@ -50,5 +50,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: Build
     steps:
+      - name: Get build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: frontend
+
+      - name: Output artifact
+        run: ls -la
+
       - name: Deploy
         run: echo "Deploying..."
