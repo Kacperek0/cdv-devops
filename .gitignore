@@ -23,5 +23,5 @@ Terraform/plan
 
 # Just testing
 
-# Ignore C++
-*.cpp
+# # Ignore C++
+# *.cpp
