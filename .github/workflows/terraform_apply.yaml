@@ -1,0 +1,53 @@
+name: Deploy Infrastructure
+
+on:
+  pull_request:
+    paths:
+      - "Terraform/**"
+      - ".github/workflows/terraform_apply.yaml"
+    types:
+      - closed
+  push:
+
+jobs:
+  Apply:
+    name: Deploy Infrastructure
+    runs-on: ubuntu-latest
+    env:
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      application: ${{ vars.APPLICATION }}
+      owner: ${{ vars.OWNER }}
+      location: ${{ vars.LOCATION }}
+      perfix: ${{ vars.PREFIX }}
+      admin_password: ${{ secrets.ADMIN_PASSWORD }}
+      environment: ${{ vars.ENVIRONMENT }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform init
+        run: terraform init
+        working-directory: ./Terraform
+
+      - name: Terraform plan
+        run: |
+          terraform plan \
+          --var="application=${{ env.application }}" \
+          --var="environments=[\"${{ env.environment }}\"]" \
+          --var="owner=${{ env.owner }}" \
+          --var="location=${{ env.location }}" \
+          --var="prefix=${{ env.perfix }}" \
+          --var="admin_password=${{ env.admin_password }}" \
+          --var="environment=${{ env.environment }}" \
+          --out=tfplan
+        working-directory: ./Terraform
+
+      - name: Terraform apply
+        run: terraform apply tfplan
+        working-directory: ./Terraform
