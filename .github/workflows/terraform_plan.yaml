@@ -5,11 +5,15 @@ on:
     paths:
       - "Terraform/**"
       - ".github/workflows/terraform_plan.yaml"
+    types:
+      - opend
+      - synchronize
+      - reopened
   # - push
-  push:
-    paths:
-      - "Terraform/**"
-      - ".github/workflows/terraform_plan.yaml"
+  # push:
+  #   paths:
+  #     - "Terraform/**"
+  #     - ".github/workflows/terraform_plan.yaml"
 
 jobs:
   terraform:
