@@ -20,6 +20,3 @@ Terraform/plan
 
 # VSCode
 .vscode
-
-# Ignore C++ files
-*.cpp
