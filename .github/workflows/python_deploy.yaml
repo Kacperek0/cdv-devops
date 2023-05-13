@@ -5,7 +5,6 @@ on:
       - "Actions/python-package/**"
     types:
       - closed
-  push:
 
 jobs:
   Publish:
