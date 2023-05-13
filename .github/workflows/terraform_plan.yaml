@@ -4,10 +4,10 @@ on:
       paths:
         - "Terraform/**"
         - ".github/workflows/terraform_plan.yaml"
-    push:
-      paths:
-        - "Terraform/**"
-        - ".github/workflows/terraform_plan.yaml"
+      types:
+        - opened
+        - synchronize
+        - reopened
 jobs:
     Test:
         name: Test Infrastructure
