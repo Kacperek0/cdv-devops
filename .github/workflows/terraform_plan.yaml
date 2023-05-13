@@ -1,11 +1,19 @@
-name: Terraform Deployment
+name: Terraform Test Infrastructure
 on:
-  - pull_request
-  - push
+  # - pull_request
+  pull_request:
+    paths:
+      - "Terraform/**"
+      - ".github/workflows/terraform_plan.yaml"
+  # - push
+  push:
+    paths:
+      - "Terraform/**"
+      - ".github/workflows/terraform_plan.yaml"
 
 jobs:
   terraform:
-    name: Deploy Infrastructure
+    name: Test Infrastructure
     runs-on: ubuntu-latest
     env:
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
