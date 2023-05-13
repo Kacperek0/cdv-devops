@@ -13,15 +13,19 @@ jobs:
 
             - name: Setup Terraform
               uses: hashicorp/setup-terraform@v2
-              
+
             - name: Terraform fmt
               run: terraform fmt -check
-              
+              working-directory: ./Terraform
+
             - name: Terraform init
               run: terraform init
-              
+              working-directory: ./Terraform
+
             - name: Terraform validate
               run: terraform validate
-              
+              working-directory: ./Terraform
+
             - name: Terraform plan
               run: terraform plan
+              working-directory: ./Terraform
