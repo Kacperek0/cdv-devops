@@ -8,15 +8,15 @@ module "resource_group" {
   prefix      = var.prefix
 }
 
-module "la_resource_group" {
-  source = "./modules/resource_group"
+# module "la_resource_group" {
+#   source = "./modules/resource_group"
 
-  application = "monitoring"
-  environment = "all"
-  owner       = var.owner
-  location    = var.location
-  prefix      = var.prefix
-}
+#   application = "monitoring"
+#   environment = "all"
+#   owner       = var.owner
+#   location    = var.location
+#   prefix      = var.prefix
+# }
 
 module "networking" {
   source = "./modules/networking"
