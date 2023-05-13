@@ -9,8 +9,8 @@ variable "application" {
 }
 
 variable "environment" {
-    type = string
-    description = "Environment name"
+  type        = string
+  description = "Environment name"
 }
 
 variable "owner" {
