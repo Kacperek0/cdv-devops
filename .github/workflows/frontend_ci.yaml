@@ -46,4 +46,3 @@ jobs:
     steps:
       - name: Deploy
         run: echo "Deploying..."
-        working-directory: ./Actions/react-app
