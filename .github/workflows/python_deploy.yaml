@@ -25,12 +25,15 @@ jobs:
           pip install -r requirements.txt
           pip install wheel
           pip install twine
+        working-directory: ./Actions/python-package
 
       - name: Build package
         run: python setup.py sdist bdist_wheel
+        working-directory: ./Actions/python-package
 
       - name: Publish package
         env:
           TWINE_USERNAME: _token_
           TWINE_PASSWORD: ${{ secrets.TESTPYPI_TOKEN }}
         run: twine upload --repository testpyip dist/*
+        working-directory: ./Actions/python-package
