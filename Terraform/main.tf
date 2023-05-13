@@ -134,3 +134,13 @@ module "bastion" {
 #   resource_group_name = module.la_resource_group.resource_group_name
 #   location            = var.location
 # }
+
+module "frontend" {
+  source = "./modules/storage_account"
+
+  application         = var.application
+  environment         = var.environment
+  owner               = var.owner
+  location            = var.location
+  resource_group_name = module.resource_group.resource_group_name
+}

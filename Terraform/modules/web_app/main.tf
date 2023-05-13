@@ -75,5 +75,5 @@ module "web_app_monitoring_warning" {
   threshold                  = 5
 
   app_service_name = azurerm_linux_web_app.webapp.name
-  warning_ag = var.warning_ag
+  warning_ag       = var.warning_ag
 }
