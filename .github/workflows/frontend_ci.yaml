@@ -40,6 +40,12 @@ jobs:
         run: npm run build
         working-directory: ./Actions/react-app
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend
+          path: ./Actions/react-app/dist
+
   Deploy:
     runs-on: ubuntu-latest
     needs: Build
