@@ -58,5 +58,8 @@ jobs:
       - name: Output artifact
         run: ls -la
 
-      - name: Deploy
-        run: echo "Deploying..."
+      - name: Upload files to Storage Account
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az storage blob upload-bach --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} --account-key ${{ secrets.AZURE_STORAGE_KEY }} --destination \$web --source .
