@@ -20,3 +20,6 @@ Terraform/plan
 
 # VSCode
 .vscode
+
+# Node
+node_modules

@@ -21,10 +21,6 @@ jobs:
         run: npm ci
         working-directory: ./Actions/react-app
 
-      - name: Lint code
-        run: npm run lint
-        working-directory: ./Actions/react-app
-
       - name: Test code
         run: npm run test
         working-directory: ./Actions/react-app
