@@ -51,9 +51,9 @@ jobs:
           --var="environment=${{ env.environment }}"
         working-directory: ./Terraform
         env:
-          application: "terraform-iac"
-          owner: "kkesy1@edu.cdv.pl"
-          location: "westeurope"
-          prefix: "cdv"
+          application: ${{ vars.APPLICATION }}
+          owner: ${{ vars.OWNER }}
+          location: ${{ vars.LOCATION }}
+          prefix: ${{ vars.PREFIX }}
           admin_password: ${{ secrets.ADMIN_PASSWORD }}
-          environment: "dev"
+          environment: ${{ vars.ENVIRONMENT }}
