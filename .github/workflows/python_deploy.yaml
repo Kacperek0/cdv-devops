@@ -35,5 +35,5 @@ jobs:
         env:
           TWINE_USERNAME: _token_
           TWINE_PASSWORD: ${{ secrets.TESTPYPI_TOKEN }}
-        run: twine upload --repository testpyip dist/*
+        run: twine upload --repository testpypi dist/*
         working-directory: ./Actions/python-package
