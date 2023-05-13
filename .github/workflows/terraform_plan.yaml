@@ -32,5 +32,20 @@ jobs:
               working-directory: ./Terraform
 
             - name: Terraform plan
-              run: terraform plan
+              run: |
+                terraform plan \
+                --var="application=${{ env.application }}" \
+                --var="environments=[\"${{ env.environment }}\"]" \
+                --var="owner=${{ env.owner }}" \
+                --var="location=${{ env.location }}" \
+                --var="prefix=${{ env.perfix }}" \
+                --var="admin_password=${{ env.admin_password }}" \
+                --var="environment=${{ env.environment }}"
               working-directory: ./Terraform
+              env:
+                application: "terraform"
+                owner: "kacper.szczepanek@cdv.pl"
+                location: "westeurope"
+                perfix: "cdv"
+                admin_password: ${{ secrets.ADMIN_PASSWORD }}
+                environment: "dev"
