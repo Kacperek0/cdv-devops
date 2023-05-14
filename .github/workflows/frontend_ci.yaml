@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-report
-          path: test.json
+          path: ./Actions/react-app/test.json
 
   Build:
     runs-on: ubuntu-latest
