@@ -53,6 +53,7 @@ jobs:
         run: |
             az storage blob upload-batch \
             --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+            --overwrite \
             --destination \$web --source .
 
   Report:
