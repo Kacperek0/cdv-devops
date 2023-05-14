@@ -1,18 +1,30 @@
 {
+    "root": true,
     "env": {
-        "browser": true,
-        "es2021": true
+        "node": true,
+        "browser": true
     },
-    "extends": "plugin:react/recommended",
-    "overrides": [
-    ],
     "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
+    "extends": [
+        "plugin:react/recommended",
+        "plugin:react/jsx-runtime"
     ],
     "rules": {
+        "react/react-in-jsx-scope": "off",
+        "semi": [
+            2,
+            "always"
+        ]
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }
