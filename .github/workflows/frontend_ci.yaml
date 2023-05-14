@@ -62,7 +62,6 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     needs:
-      - Linter
       - Test
     steps:
       - name: Checkout
@@ -90,7 +89,9 @@ jobs:
 
   Deploy:
     runs-on: ubuntu-latest
-    needs: Build
+    needs:
+      - Build
+      - Linter
     steps:
       - name: Get build artifact
         uses: actions/download-artifact@v3
