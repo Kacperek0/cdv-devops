@@ -1,0 +1,99 @@
+name: Test and build frontend
+on:
+  pull_request:
+    paths:
+      - "Actions/react-app/**"
+      - ".github/workflows/frontend_ci.yaml"
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  Linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./Actions/react-app
+
+      - name: Lint code
+        run: npm run lint
+        working-directory: ./Actions/react-app
+
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./Actions/react-app
+
+      - name: Test code
+        id: npm-test
+        run: npm run test
+        working-directory: ./Actions/react-app
+
+      - name: Upload test coverage
+        if: failure() && steps.npm-test.outcome != 'success'
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: ./Actions/react-app/test.json
+
+  Build:
+    runs-on: ubuntu-latest
+    needs:
+      - Test
+      - Linter
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./Actions/react-app
+
+      - name: Build frontend
+        run: npm run build
+        working-directory: ./Actions/react-app
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend
+          path: ./Actions/react-app/dist
+
+  Report:
+    runs-on: ubuntu-latest
+    needs:
+      - Build
+    if: failure()
+    steps:
+      - name: Issue summary
+        run: |
+          echo "Report:"
+          echo "${{ toJSON(github) }}"
