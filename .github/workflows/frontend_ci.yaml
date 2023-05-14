@@ -58,8 +58,13 @@ jobs:
       - name: Output artifact
         run: ls -la
 
-      - name: Upload files to Storage Account
-        uses: azure/CLI@v1
+      - name: Login to Azure CLI
+        uses: azure/login@v1
         with:
-          inlineScript: |
-            az storage blob upload-batch --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} --account-key ${{ secrets.AZURE_STORAGE_KEY }} --destination \$web --source .
+          creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
+
+      - name: Upload files to Storage Account
+        run: |
+            az storage blob upload-batch \
+            --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+            --destination \$web --source .
