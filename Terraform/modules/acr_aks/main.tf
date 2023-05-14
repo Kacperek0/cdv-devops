@@ -4,6 +4,8 @@ resource "azurerm_container_registry" "acr" {
   location            = var.location
   sku                 = "Premium"
 
+  admin_enabled = true
+
   tags = {
     application = var.application
     environment = var.environment
