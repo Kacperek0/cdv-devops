@@ -53,7 +53,7 @@ jobs:
         working-directory: ./Actions/react-app
 
       - name: Upload test coverage
-        if: steps.npm-test.outcome != 'success'
+        if: failure() && steps.npm-test.outcome != 'success'
         uses: actions/upload-artifact@v3
         with:
           name: test-report
