@@ -56,4 +56,5 @@ jobs:
 
       - name: Query container
         run: |
+          sleep 10
           echo "$(curl http://localhost:8000)"
