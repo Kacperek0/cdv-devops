@@ -108,6 +108,9 @@ jobs:
 
   Report:
     runs-on: ubuntu-latest
+    needs:
+      - Linter
+      - Deploy
     if: failure()
     steps:
       - name: Issue summary
