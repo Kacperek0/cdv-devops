@@ -8,7 +8,6 @@ on:
       - edited
     paths:
       - "Kubernetes/fastapi-101-main/**"
-  push:
 
 jobs:
   Build:
