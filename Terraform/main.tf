@@ -61,24 +61,24 @@ module "networking" {
 #   warning_ag                 = module.log_analytics.warning_ag
 # }
 
-module "bastion" {
-  source = "./modules/virtual_machine"
+# module "bastion" {
+#   source = "./modules/virtual_machine"
 
-  count = 2
+#   count = 2
 
-  application         = "bastion"
-  environment         = var.environment
-  owner               = var.owner
-  location            = var.location
-  prefix              = var.prefix
-  instances           = count.index
-  admin_password      = var.admin_password
-  resource_group_name = module.resource_group.resource_group_name
-  subnet_id           = module.networking.subnet_id
-  sg_id               = module.networking.sg_id
-  create_public_ip    = true
-  create_as           = false
-}
+#   application         = "bastion"
+#   environment         = var.environment
+#   owner               = var.owner
+#   location            = var.location
+#   prefix              = var.prefix
+#   instances           = count.index
+#   admin_password      = var.admin_password
+#   resource_group_name = module.resource_group.resource_group_name
+#   subnet_id           = module.networking.subnet_id
+#   sg_id               = module.networking.sg_id
+#   create_public_ip    = true
+#   create_as           = false
+# }
 
 # module "application_nodes" {
 #   source = "./modules/virtual_machine"
