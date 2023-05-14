@@ -105,3 +105,12 @@ jobs:
             az storage blob upload-batch \
             --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
             --destination \$web --source .
+
+  Report:
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+      - name: Issue summary
+        run: |
+          echo "Report:"
+          echo "${{ toJSON(github) }}"
