@@ -25,9 +25,11 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        working-directory: ./Actions/react-app
 
       - name: Lint code
         run: npm run lint
+        working-directory: ./Actions/react-app
 
   Test:
     runs-on: ubuntu-latest
