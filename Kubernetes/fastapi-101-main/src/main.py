@@ -115,7 +115,7 @@ def delete_post(
 
 @app.get('/')
 def index():
-    return {'200': 'Very OK'}
+    return {'200': 'Very OK from AKS'}
 
 if __name__ == "__main__":
     import uvicorn
