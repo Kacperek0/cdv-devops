@@ -1,0 +1,366 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "For_each_2": {
+                "actions": {
+                    "Post_message_(V2)": {
+                        "inputs": {
+                            "body": {
+                                "channel": "C04CLKG03MG",
+                                "text": "@{items('For_each_2')?['name']} shall not be used at the weekend:)",
+                                "username": "LogicAppBotKK"
+                            },
+                            "host": {
+                                "connection": {
+                                    "name": "@parameters('$connections')['slack']['connectionId']"
+                                }
+                            },
+                            "method": "post",
+                            "path": "/v2/chat.postMessage"
+                        },
+                        "runAfter": {},
+                        "type": "ApiConnection"
+                    }
+                },
+                "foreach": "@body('List_resources_by_subscription')?['value']",
+                "runAfter": {
+                    "Iterate_through_VMs": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Foreach"
+            },
+            "Initialize_variable": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "list_of_vms",
+                            "type": "array"
+                        }
+                    ]
+                },
+                "runAfter": {},
+                "type": "InitializeVariable"
+            },
+            "Iterate_through_VMs": {
+                "actions": {
+                    "Check_VM_running_state": {
+                        "inputs": {
+                            "authentication": {
+                                "type": "ManagedServiceIdentity"
+                            },
+                            "method": "GET",
+                            "uri": "https://management.azure.com@{items('Iterate_through_VMs')?['id']}/instanceView?api-version=2023-03-01"
+                        },
+                        "runAfter": {},
+                        "type": "Http"
+                    },
+                    "For_each": {
+                        "actions": {
+                            "Condition": {
+                                "actions": {
+                                    "Append_to_array_variable": {
+                                        "inputs": {
+                                            "name": "list_of_vms",
+                                            "value": "@items('Iterate_through_VMs')?['name']"
+                                        },
+                                        "runAfter": {},
+                                        "type": "AppendToArrayVariable"
+                                    },
+                                    "HTTP": {
+                                        "inputs": {
+                                            "authentication": {
+                                                "type": "ManagedServiceIdentity"
+                                            },
+                                            "method": "POST",
+                                            "uri": "https://management.azure.com@{items('Iterate_through_VMs')?['id']}/start?api-version=2023-03-01"
+                                        },
+                                        "runAfter": {
+                                            "Append_to_array_variable": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "Http"
+                                    }
+                                },
+                                "expression": {
+                                    "and": [
+                                        {
+                                            "contains": [
+                                                "@items('For_each')?['code']",
+                                                "PowerState/deallocated"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "runAfter": {},
+                                "type": "If"
+                            }
+                        },
+                        "foreach": "@body('Parse_JSON')?['statuses']",
+                        "runAfter": {
+                            "Parse_JSON": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Foreach"
+                    },
+                    "Parse_JSON": {
+                        "inputs": {
+                            "content": "@body('Check_VM_running_state')",
+                            "schema": {
+                                "properties": {
+                                    "computerName": {
+                                        "type": "string"
+                                    },
+                                    "disks": {
+                                        "items": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "statuses": {
+                                                    "items": {
+                                                        "properties": {
+                                                            "code": {
+                                                                "type": "string"
+                                                            },
+                                                            "displayStatus": {
+                                                                "type": "string"
+                                                            },
+                                                            "level": {
+                                                                "type": "string"
+                                                            },
+                                                            "time": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "code",
+                                                            "level",
+                                                            "displayStatus",
+                                                            "time"
+                                                        ],
+                                                        "type": "object"
+                                                    },
+                                                    "type": "array"
+                                                }
+                                            },
+                                            "required": [
+                                                "name",
+                                                "statuses"
+                                            ],
+                                            "type": "object"
+                                        },
+                                        "type": "array"
+                                    },
+                                    "hyperVGeneration": {
+                                        "type": "string"
+                                    },
+                                    "maintenanceRedeployStatus": {
+                                        "properties": {
+                                            "isCustomerInitiatedMaintenanceAllowed": {
+                                                "type": "boolean"
+                                            },
+                                            "lastOperationMessage": {
+                                                "type": "string"
+                                            },
+                                            "lastOperationResultCode": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "osName": {
+                                        "type": "string"
+                                    },
+                                    "osVersion": {
+                                        "type": "string"
+                                    },
+                                    "statuses": {
+                                        "items": {
+                                            "properties": {
+                                                "code": {
+                                                    "type": "string"
+                                                },
+                                                "displayStatus": {
+                                                    "type": "string"
+                                                },
+                                                "level": {
+                                                    "type": "string"
+                                                },
+                                                "time": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "code",
+                                                "level",
+                                                "displayStatus"
+                                            ],
+                                            "type": "object"
+                                        },
+                                        "type": "array"
+                                    },
+                                    "vmAgent": {
+                                        "properties": {
+                                            "extensionHandlers": {
+                                                "type": "array"
+                                            },
+                                            "statuses": {
+                                                "items": {
+                                                    "properties": {
+                                                        "code": {
+                                                            "type": "string"
+                                                        },
+                                                        "displayStatus": {
+                                                            "type": "string"
+                                                        },
+                                                        "level": {
+                                                            "type": "string"
+                                                        },
+                                                        "message": {
+                                                            "type": "string"
+                                                        },
+                                                        "time": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "code",
+                                                        "level",
+                                                        "displayStatus",
+                                                        "message",
+                                                        "time"
+                                                    ],
+                                                    "type": "object"
+                                                },
+                                                "type": "array"
+                                            },
+                                            "vmAgentVersion": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "runAfter": {
+                            "Check_VM_running_state": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "ParseJson"
+                    }
+                },
+                "foreach": "@body('List_resources_by_subscription')?['value']",
+                "runAfter": {
+                    "List_resources_by_subscription": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Foreach"
+            },
+            "List_resources_by_subscription": {
+                "inputs": {
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['arm']['connectionId']"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/subscriptions/@{encodeURIComponent('725fa6c3-bb84-4bc9-a873-2d1d65c02bbf')}/resources",
+                    "queries": {
+                        "$filter": "resourcetype eq 'Microsoft.Compute/virtualMachines'",
+                        "x-ms-api-version": "2016-06-01"
+                    }
+                },
+                "runAfter": {
+                    "Initialize_variable": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "Trigger_Logic_App_on_after_Office_Hours": {
+                "evaluatedRecurrence": {
+                    "frequency": "Week",
+                    "interval": 1,
+                    "schedule": {
+                        "hours": [
+                            "18"
+                        ],
+                        "minutes": [
+                            0
+                        ],
+                        "weekDays": [
+                            "Monday",
+                            "Tuesday",
+                            "Wednesday",
+                            "Thursday",
+                            "Friday"
+                        ]
+                    },
+                    "startTime": "2023-05-14T15:00:00",
+                    "timeZone": "Central European Standard Time"
+                },
+                "recurrence": {
+                    "frequency": "Week",
+                    "interval": 1,
+                    "schedule": {
+                        "hours": [
+                            "18"
+                        ],
+                        "minutes": [
+                            0
+                        ],
+                        "weekDays": [
+                            "Monday",
+                            "Tuesday",
+                            "Wednesday",
+                            "Thursday",
+                            "Friday"
+                        ]
+                    },
+                    "startTime": "2023-05-14T15:00:00",
+                    "timeZone": "Central European Standard Time"
+                },
+                "type": "Recurrence"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "arm": {
+                    "connectionId": "/subscriptions/725fa6c3-bb84-4bc9-a873-2d1d65c02bbf/resourceGroups/cdv-automation-rg/providers/Microsoft.Web/connections/arm-2",
+                    "connectionName": "arm-2",
+                    "connectionProperties": {
+                        "authentication": {
+                            "type": "ManagedServiceIdentity"
+                        }
+                    },
+                    "id": "/subscriptions/725fa6c3-bb84-4bc9-a873-2d1d65c02bbf/providers/Microsoft.Web/locations/westeurope/managedApis/arm"
+                },
+                "slack": {
+                    "connectionId": "/subscriptions/725fa6c3-bb84-4bc9-a873-2d1d65c02bbf/resourceGroups/cdv-automation-rg/providers/Microsoft.Web/connections/slack",
+                    "connectionName": "slack",
+                    "id": "/subscriptions/725fa6c3-bb84-4bc9-a873-2d1d65c02bbf/providers/Microsoft.Web/locations/westeurope/managedApis/slack"
+                }
+            }
+        }
+    }
+}
