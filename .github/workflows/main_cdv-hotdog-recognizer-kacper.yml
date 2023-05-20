@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Python version
         uses: actions/setup-python@v1
@@ -30,9 +30,11 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
+        working-directory: ./Hotdog-not-hotdog
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+        working-directory: ./Hotdog-not-hotdog
         
       # Optional: Add step to run tests here
 
